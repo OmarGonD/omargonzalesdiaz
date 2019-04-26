@@ -7,7 +7,7 @@ defaultContentLanguage = "es"
 # Enable comments by entering your Disqus shortname
 disqusShortname = "devcows"
 # Enable Google Analytics by entering your tracking code
-googleAnalytics = ""
+googleAnalytics = "UA-54695178-1"
 
 # Define the number of posts per page
 paginate = 10
@@ -26,11 +26,6 @@ paginate = 10
     url  = "/blog/"
     weight = 2
 
-[[menu.main]]
-    name = "FAQ"
-    identifier = "faq"
-    url  = "/faq/"
-    weight = 3
 
 [[menu.main]]
     name = "contacto"
@@ -60,7 +55,7 @@ paginate = 10
 [[menu.topbar]]
     weight = 4
     name = "Email"
-    url = "mailto:your@email.com"
+    url = "mailto:oma.gonzales@gmail.com"
     pre = "<i class='fa fa-2x fa-envelope'></i>"
 
 [params]
@@ -77,7 +72,7 @@ paginate = 10
     googleMapsApiKey = "AIzaSyCFhtWLJcE30xOAjcbSFi-0fnoVmQZPb1Y"
 
     # Style options: default (light-blue), blue, green, marsala, pink, red, turquoise, violet
-    style = "default"
+    style = "blue"
 
     # Since this template is static, the contact form uses www.formspree.io as a
     # proxy. The form makes a POST request to their servers to send the actual
@@ -96,24 +91,15 @@ paginate = 10
     contact_form_ajax = false
 
     about_us = "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>"
-    copyright = "Copyright (c) 2015 - 2016, YourCompany; all rights reserved."
-
+    copyright = "Copyright (c) 92019, omargonzalesdiaz; todos los derechos reservados."
+    
     # Format dates with Go's time formatting
     date_format = "January 2, 2006"
 
     logo = "img/logo.png"
     logo_small = "img/logo-small.png"
-    address = """<p><strong>Universal Ltd.</strong>
-        <br>13/25 New Avenue
-        <br>Newtown upon River
-        <br>45Y 73J
-        <br>England
-        <br>
-        <strong>Great Britain</strong>
-      </p>
-      """
-    latitude = "-12.043333"
-    longitude = "-77.028333"
+    address = """<p><strong>Lima - Perú</strong>
+    
 
 [Permalinks]
     blog = "/blog/:year/:month/:day/:filename/"
@@ -134,7 +120,7 @@ paginate = 10
     search = true
 
 [params.carousel]
-    enable = true
+    enable = false
     # All carousel items are defined in their own files. You can find example items
     # at 'exampleSite/data/carousel'.
     # For more informtion take a look at the README.
@@ -146,7 +132,7 @@ paginate = 10
     # For more informtion take a look at the README.
 
 [params.testimonials]
-    enable = true
+    enable = false
     # All testimonials are defined in their own files. You can find example items
     # at 'exampleSite/data/testimonials'.
     # For more informtion take a look at the README.
@@ -162,7 +148,7 @@ paginate = 10
     link_text = "Check other homepages"
 
 [params.clients]
-    enable = true
+    enable = false
     # All clients are defined in their own files. You can find example items
     # at 'exampleSite/data/clients'.
     # For more informtion take a look at the README.
@@ -171,5 +157,5 @@ paginate = 10
 
 [params.recent_posts]
     enable = true
-    title = "From our blog"
-    subtitle = "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo."
+    title = "Del Blog"
+    subtitle = "Entradas más recientes."
