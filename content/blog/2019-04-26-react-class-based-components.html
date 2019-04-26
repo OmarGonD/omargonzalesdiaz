@@ -1,0 +1,59 @@
+---
+title: "React State vs Functional"
+author: "omar gonzales diaz"
+date: "4/26/2019"
+output: html_document
+---
+
+
+
+<div id="usestate---class-based" class="section level2">
+<h2>useState - Class based</h2>
+<p>Solo se debe usar useState en componentes basados en clases.</p>
+<pre class="js"><code>import React, { Component } from &#39;react&#39;
+
+class App extends Component {
+
+  state = {
+    persons: [
+      {name: &#39;Max&#39;, age:28 },
+      {name: &#39;Manu&#39;, age:29 },
+      {name: &#39;Stephanie&#39;, age:26 }
+    ],
+    otherstate: &#39;some other value&#39;
+  }
+
+};
+</code></pre>
+<script type="text/javascript">
+import React, { Component } from 'react'
+
+class App extends Component {
+
+  state = {
+    persons: [
+      {name: 'Max', age:28 },
+      {name: 'Manu', age:29 },
+      {name: 'Stephanie', age:26 }
+    ],
+    otherstate: 'some other value'
+  }
+
+};
+
+</script>
+<pre class="r"><code>summary(cars)</code></pre>
+<pre><code>##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00</code></pre>
+</div>
+<div id="including-plots" class="section level2">
+<h2>Including Plots</h2>
+<p>You can also embed plots, for example:</p>
+<p><img src="/blog/2019-04-26-react-class-based-components_files/figure-html/pressure-1.png" width="672" /></p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+</div>

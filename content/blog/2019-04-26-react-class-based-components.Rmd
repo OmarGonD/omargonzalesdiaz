@@ -1,0 +1,48 @@
+---
+title: "React State vs Functional"
+author: "omar gonzales diaz"
+date: "4/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## useState - Class based
+
+
+Solo se debe usar useState en componentes basados en clases. Nada más.
+
+```{js}
+import React, { Component } from 'react'
+
+class App extends Component {
+
+  state = {
+    persons: [
+      {name: 'Max', age:28 },
+      {name: 'Manu', age:29 },
+      {name: 'Stephanie', age:26 }
+    ],
+    otherstate: 'some other value'
+  }
+
+};
+
+```
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
