@@ -90,7 +90,7 @@ paginate = 10
     email = "your@email.com"
     contact_form_ajax = false
 
-    about_us = "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>"
+    about_us = "<p>Página personal de omargonzalesdiaz.</p>"
     copyright = "Copyright (c) 92019, omargonzalesdiaz; todos los derechos reservados."
     
     # Format dates with Go's time formatting
@@ -98,7 +98,7 @@ paginate = 10
 
     logo = "img/logo.png"
     logo_small = "img/logo-small.png"
-    address = """<p><strong>Lima - Perú</strong>
+    address = """<p><strong>Lima - Perú</strong>""" 
     
 
 [Permalinks]
