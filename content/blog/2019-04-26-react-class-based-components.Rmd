@@ -14,23 +14,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Solo se debe usar useState en componentes basados en clases. Nada más.
 
-```{js}
-import React, { Component } from 'react'
-
-class App extends Component {
-
-  state = {
-    persons: [
-      {name: 'Max', age:28 },
-      {name: 'Manu', age:29 },
-      {name: 'Stephanie', age:26 }
-    ],
-    otherstate: 'some other value'
-  }
-
-};
-
-```
 
 
 ```{r cars}
