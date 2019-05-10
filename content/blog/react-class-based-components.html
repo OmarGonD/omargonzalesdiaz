@@ -1,17 +1,764 @@
 ---
-title: "react-class-based-components"
-author: Ariel Muldoon
-date: '2017-12-21'
+title: "React: Class based components vs functional components"
+author: Omar Gonzáles Díaz
+date: '2019-04-26'
 slug: react-class-based-components
-categories: [r, statistics]
-tags: [glmm, dharma, simulation]
-description: "Checking for model fit from generalized linear mixed models (GLMM) can be challenging."
+categories: [react, javascript]
+tags: [react, javascript]
+description: "Understanding class based components."
+banner: "img/banners/banner-react.jpg"
 ---
 
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+<div id="react-class-based-components" class="section level2">
+<h2>React class based components</h2>
+<p>Antes de REact 1.16 esta era la única forma de cambiar los states en aplicaciones.</p>
+<p>Aún es importante aprender este método.</p>
+<p>La información a manipular la podemos obtener de:</p>
+<ol style="list-style-type: decimal">
+<li>Un archivo externo (JS)</li>
+<li>Desde la misma clase o función.</li>
+</ol>
+<pre class="js"><code>
+import React, { Component } from &#39;react&#39;;
+import &#39;./App.css&#39;;
+import Person from &#39;./Person/Person&#39;;
+
+class App extends Component {
+
+  render() {
+  
+    return (
+    
+      &lt;div className=&#39;App&#39;&gt;
+        &lt;h1&gt;Hi, Im a react app&lt;/h1&gt;
+        &lt;p&gt;This is really working&lt;/p&gt;
+        &lt;Person name=&quot;Max&quot; age=&quot;28&quot; /&gt;
+        &lt;Person name=&quot;Manu&quot; age=&quot;29&quot;&gt; My Hobbies: Racing &lt;Person/&gt;
+        &lt;Person name=&quot;Stephanie&quot; age=&quot;26&quot; /&gt;
+      &lt;/div&gt;  
+    
+    );
+  
+  }
+
+}
+
+
+export default App;
+</code></pre>
+<script type="text/javascript">
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+class App extends Component {
+
+  render() {
+  
+    return (
+    
+      <div className='App'>
+        <h1>Hi, Im a react app</h1>
+        <p>This is really working</p>
+        <Person name="Max" age="28" />
+        <Person name="Manu" age="29"> My Hobbies: Racing <Person/>
+        <Person name="Stephanie" age="26" />
+      </div>  
+    
+    );
+  
+  }
+
+}
+
+
+export default App;
+
+</script>
+<div id="personperson.js" class="section level3">
+<h3>Person/Person.js</h3>
+<pre class="js"><code>
+import React from &#39;react&#39;;
+
+const person = ( props ) =&gt; {
+  
+  return &lt;p&gt;Im {props.name} and I am {props.age} years old.&lt;/p&gt; 
+  
+};
+
+export default person
+</code></pre>
+<script type="text/javascript">
+
+import React from 'react';
+
+const person = ( props ) => {
+  
+  return <p>Im {props.name} and I am {props.age} years old.</p> 
+  
+};
+
+export default person
+
+</script>
+<p>#Understanding children</p>
+<p>Cualquier elemento dentro de las etiquetas de apertura y cierra de nuestros componente, en este caso, nuestro componente Persona.</p>
+<p>Complex HTMl, list, otros componentes React.</p>
+<pre class="js"><code>
+import React from &#39;react&#39;;
+
+const person = ( props ) =&gt; {
+  
+  return( 
+    
+    &lt;div&gt;
+    &lt;p&gt;Im {props.name} and I am {props.age} years old.&lt;/p&gt; 
+    &lt;p&gt;{props.children}&lt;/p&gt;
+      
+  )
+            
+};
+
+export default person
+</code></pre>
+<script type="text/javascript">
+
+import React from 'react';
+
+const person = ( props ) => {
+  
+  return( 
+    
+    <div>
+    <p>Im {props.name} and I am {props.age} years old.</p> 
+    <p>{props.children}</p>
+      
+  )
+            
+};
+
+export default person
+
+</script>
+<p>A veces no quieres tener la información en un archivo externo, sino desde dentro del mismo componente y cambiarla desde allí también.</p>
+<p>Los states solo funcionan en clases que extiendan la clase Component.</p>
+<p>Mientras que props son set and passed desde fuera, state se inicializa dentro de un componente.</p>
+<p>state solo es válido para clases que extienden el componente Component.</p>
+<p><strong>Se deben usar function components tanto como se pueda</strong> para evitar usar state en cualquier parte. Tener y usar state y manipularlo desde diferentes archivos en tu app la convierte rápidamente en impredescible.</p>
+<p>#Using states</p>
+<p>this hace referencia a la clase (class App) por la sintaxis IE6.</p>
+<p>state es una propiedad especial de la clase App.</p>
+<pre class="js"><code>
+import React, { Component } from &#39;react&#39;;
+import &#39;./App.css&#39;;
+import Person from &#39;./Person/Person&#39;;
+
+class App extends Component {
+  state = {
+    persons: [
+      { name: &#39;Max&#39;, age:25 },
+      { name: &#39;Manu&#39;, age:28 },
+      { name: &#39;Stephanie&#39;, age:22 }
+    ],
+    otherstate: &#39;some value&#39;
+  };
+  
+  
+  render() {
+  
+    return(
+      &lt;div className=&quot;App&quot;&gt;
+        &lt;h1&gt;Hi, Im a react app&lt;/h1&gt;
+        &lt;p&gt;This is really working&lt;/p&gt;
+        &lt;button&gt;Switch Name&lt;/button&gt;
+        &lt;Person name={this.state.person[0].name} age={this.state.person[0].age} /&gt;
+        &lt;Person name={this.state.person[1].name} age={this.state.person[1].age}&gt;My Hobbies:  Racing&lt;Person/&gt;
+        &lt;Person name=this.state.person[2].name age=this.state.person[2].age /&gt;
+      &lt;/div&gt;  
+    );
+  
+  }
+
+ switchNameHandler = () =&gt; { //class based component
+    this.setState({
+    
+      persons: [
+      { name: &#39;Maximiliam&#39;, age:25 },
+      { name: &#39;Manu&#39;, age:29 },
+      { name: &#39;Stephanie&#39;, age:8 }
+    ],
+    otherstate: &#39;some value&#39;
+    
+    })
+ }
+
+
+}</code></pre>
+<script type="text/javascript">
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+class App extends Component {
+  state = {
+    persons: [
+      { name: 'Max', age:25 },
+      { name: 'Manu', age:28 },
+      { name: 'Stephanie', age:22 }
+    ],
+    otherstate: 'some value'
+  };
+  
+  
+  render() {
+  
+    return(
+      <div className="App">
+        <h1>Hi, Im a react app</h1>
+        <p>This is really working</p>
+        <button>Switch Name</button>
+        <Person name={this.state.person[0].name} age={this.state.person[0].age} />
+        <Person name={this.state.person[1].name} age={this.state.person[1].age}>My Hobbies:  Racing<Person/>
+        <Person name=this.state.person[2].name age=this.state.person[2].age />
+      </div>  
+    );
+  
+  }
+
+ switchNameHandler = () => { //class based component
+    this.setState({
+    
+      persons: [
+      { name: 'Maximiliam', age:25 },
+      { name: 'Manu', age:29 },
+      { name: 'Stephanie', age:8 }
+    ],
+    otherstate: 'some value'
+    
+    })
+ }
+
+
+}
+</script>
+<p>Props &amp; State
+Section 3, Lecture 38
+props and state are CORE concepts of React. Actually, only changes in props and/ or state trigger React to re-render your components and potentially update the DOM in the browser (a detailed look at how React checks whether to really touch the real DOM is provided in section 6).</p>
+<p>Props</p>
+<p>props allow you to pass data from a parent (wrapping) component to a child (embedded) component.</p>
+<p>Example:</p>
+<p>##AllPosts Component:</p>
+<pre class="js"><code>const posts = () =&gt; {
+    return (
+        &lt;div&gt;
+            &lt;Post title=&quot;My first Post&quot; /&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+<script type="text/javascript">
+const posts = () => {
+    return (
+        <div>
+            <Post title="My first Post" />
+        </div>
+    );
+}
+</script>
+<p>Here, title is the custom property (prop ) set up on the custom Post component. We basically replicate the default HTML attribute behavior we already know (e.g. <input type="text"> informs the browser about how to handle that input).</p>
+<p>The Post component receives the props argument. You can of course name this argument whatever you want - it’s your function definition, React doesn’t care! But React will pass one argument to your component function =&gt; An object, which contains all properties you set up on &lt;Post … /&gt; .</p>
+<p>{props.title} then dynamically outputs the title property of the props object - which is available since we set the title property inside AllPosts component (see above).</p>
+<p>##State</p>
+<p>Whilst props allow you to pass data down the component tree (and hence trigger an UI update), state is used to change the component, well, state from within. Changes to state also trigger an UI update.</p>
+<p>Example:</p>
+<p>###NewPost Component:</p>
+<pre class="js"><code>
+class NewPost extends Component { // state can only be accessed in class-based components!
+    state = {
+        counter: 1
+    };  
+ 
+    render () { // Needs to be implemented in class-based components! Needs to return some JSX!
+        return (
+            &lt;div&gt;{this.state.counter}&lt;/div&gt;
+        );
+    }
+}
+</code></pre>
+<script type="text/javascript">
+
+class NewPost extends Component { // state can only be accessed in class-based components!
+    state = {
+        counter: 1
+    };  
+ 
+    render () { // Needs to be implemented in class-based components! Needs to return some JSX!
+        return (
+            <div>{this.state.counter}</div>
+        );
+    }
+}
+
+</script>
+<p>Here, the NewPost component contains state . Only class-based components can define and use state . You can of course pass the state down to functional components, but these then can’t directly edit it.</p>
+<p>state simply is a property of the component class, you have to call it state though - the name is not optional. You can then access it via this.state in your class JSX code (which you return in the required render() method).</p>
+<p>Whenever state changes (taught over the next lectures), the component will re-render and reflect the new state. The difference to props is, that this happens within one and the same component - you don’t receive new data (props ) from outside!</p>
+<pre class="js"><code>
+import React, { Component } from &#39;react&#39;;
+import &#39;./App.css&#39;;
+import Person from &#39;./Person/Person&#39;;
+
+const app = props =&gt; {
+
+  return (
+  
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;h1&gt;Hi, Im  a React App&lt;/h1&gt;
+      &lt;button onClick={this.switchNameHandler}&gt;Switch Name&lt;/button&gt;
+      &lt;Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age}
+      /&gt;
+      &lt;Person 
+        name={this.state.persons[1].name}
+        age={this.state.persons[1].age}
+      &gt;My Hobbies: Racing &lt;/Person&gt;
+      &lt;Person 
+        name={this.state.persons[2].name}
+        age={this.state.persons[2].age}
+      /&gt;
+      
+    &lt;/div&gt;
+  )
+
+}
+</code></pre>
+<script type="text/javascript">
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+const app = props => {
+
+  return (
+  
+    <div className="App">
+      <h1>Hi, Im  a React App</h1>
+      <button onClick={this.switchNameHandler}>Switch Name</button>
+      <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age}
+      />
+      <Person 
+        name={this.state.persons[1].name}
+        age={this.state.persons[1].age}
+      >My Hobbies: Racing </Person>
+      <Person 
+        name={this.state.persons[2].name}
+        age={this.state.persons[2].age}
+      />
+      
+    </div>
+  )
+
+}
+
+</script>
+<p>#Handling events with methods</p>
+<p>setState .</p>
+<p>El objeto Component tiene un método setState. Este es un método que nos permite actualizare esta propiedad especial state.</p>
+<p>this.setState will merge cualquier cosa que le pongamos con nuestro state actual.</p>
+<pre class="js"><code>
+import React, { Component } from &#39;react&#39;;
+import &#39;./App.css&#39;;
+import Person from &#39;./Person/Person&#39;;
+
+class App extends Component {
+  state = {
+    persons: [
+      { name: &#39;Max&#39;, age:25 },
+      { name: &#39;Manu&#39;, age:28 },
+      { name: &#39;Stephanie&#39;, age:22 }
+    ],
+    otherstate: &#39;some value&#39;
+  }
+  
+  switchNameHandler = () =&gt; {
+  
+    this.setState({
+      persons: [
+        { name: &#39;Max&#39;, age:25 },
+        { name: &#39;Manu&#39;, age:28 },
+        { name: &#39;Stephanie&#39;, age:22 }
+      ]
+    
+    })
+  
+  }
+  
+  
+  render() {
+  
+    return(
+      &lt;div className=&quot;App&quot;&gt;
+        &lt;h1&gt;Hi, Im a react app&lt;/h1&gt;
+        &lt;p&gt;This is really working&lt;/p&gt;
+        &lt;button onClick={this.switchNameHandler}&gt;Switch Name&lt;/button&gt;
+        &lt;Person name={this.state.person[0].name} age={this.state.person[0].age} /&gt;
+        &lt;Person name={this.state.person[1].name} age={this.state.person[1].age}&gt;My Hobbies:  Racing&lt;Person/&gt;
+        &lt;Person name=this.state.person[2].name age=this.state.person[2].age /&gt;
+      &lt;/div&gt;  
+    );
+  
+  }
+
+ switchNameHandler = () =&gt; { //class based component
+    this.setState({
+    
+      persons: [
+      { name: &#39;Maximiliam&#39;, age:25 },
+      { name: &#39;Manu&#39;, age:29 },
+      { name: &#39;Stephanie&#39;, age:8 }
+    ],
+    otherstate: &#39;some value&#39;
+    
+    })
+ }
+
+
+}</code></pre>
+<script type="text/javascript">
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+class App extends Component {
+  state = {
+    persons: [
+      { name: 'Max', age:25 },
+      { name: 'Manu', age:28 },
+      { name: 'Stephanie', age:22 }
+    ],
+    otherstate: 'some value'
+  }
+  
+  switchNameHandler = () => {
+  
+    this.setState({
+      persons: [
+        { name: 'Max', age:25 },
+        { name: 'Manu', age:28 },
+        { name: 'Stephanie', age:22 }
+      ]
+    
+    })
+  
+  }
+  
+  
+  render() {
+  
+    return(
+      <div className="App">
+        <h1>Hi, Im a react app</h1>
+        <p>This is really working</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        <Person name={this.state.person[0].name} age={this.state.person[0].age} />
+        <Person name={this.state.person[1].name} age={this.state.person[1].age}>My Hobbies:  Racing<Person/>
+        <Person name=this.state.person[2].name age=this.state.person[2].age />
+      </div>  
+    );
+  
+  }
+
+ switchNameHandler = () => { //class based component
+    this.setState({
+    
+      persons: [
+      { name: 'Maximiliam', age:25 },
+      { name: 'Manu', age:29 },
+      { name: 'Stephanie', age:8 }
+    ],
+    otherstate: 'some value'
+    
+    })
+ }
+
+
+}
+</script>
+<p>#Componente tradicional a Componenete funcional:</p>
+<p>#Hooks</p>
+<p>##Functional components</p>
+<p>useState siempre retorna un array con 2 elementos:</p>
+<p>La keyword this no es necesaria más porque no estamos en una clase (class)</p>
+<p>Mientras que en class based components solo se tiene una propiedad state, y this.setState automáticamente merge todos los valores del state en el nuevo state para no perder ninguno de los valores.</p>
+<p>Aquí podemos tener varios llamados a useState.</p>
+<p>Si usas Hooks no necesitas usar Class Based Components.</p>
+<pre class="js"><code>
+import React, { useState } from &#39;react&#39;;
+import &#39;./App.css&#39;;
+import Person from &#39;./Person/Person&#39;;
+
+const app = props =&gt; {
+
+
+  const [ personState, setPersonsState ] = useState({ //Return an array with the 2 elements inside
+  //currentState and updatedState
+   persons: [
+      { name: &#39;Max&#39;, age:25 },
+      { name: &#39;Manu&#39;, age:29 },
+      { name: &#39;Stephanie&#39;, age:8 }
+    ]
+  })
+  
+  const [ otherState, setOtherState ] = useState(&#39;some other value&#39;);
+  
+  const switchHandler = () =&gt; {
+    setPersonsState({
+    
+    persons: [
+      { name: &#39;Maximiliam&#39;, age:25 },
+      { name: &#39;Manu&#39;, age:29 },
+      { name: &#39;Stephanie&#39;, age:8 }
+    ],
+    
+    }); 
+  
+  }
+
+  return (
+  
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;h1&gt;Hi, Im  a React App&lt;/h1&gt;
+      &lt;button onClick={switchNameHandler}&gt;Switch Name&lt;/button&gt;
+      &lt;Person 
+        name={personState.persons[0].name}
+        age={personState.persons[0].age}
+      /&gt;
+      &lt;Person 
+        name={personState.persons[1].name}
+        age={personState.persons[1].age}
+      &gt;My Hobbies: Racing &lt;/Person&gt;
+      &lt;Person 
+        name={personState.persons[2].name}
+        age={personState.persons[2].age}
+      /&gt;
+      
+    &lt;/div&gt;
+  )
+
+}
+</code></pre>
+<script type="text/javascript">
+
+import React, { useState } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+const app = props => {
+
+
+  const [ personState, setPersonsState ] = useState({ //Return an array with the 2 elements inside
+  //currentState and updatedState
+   persons: [
+      { name: 'Max', age:25 },
+      { name: 'Manu', age:29 },
+      { name: 'Stephanie', age:8 }
+    ]
+  })
+  
+  const [ otherState, setOtherState ] = useState('some other value');
+  
+  const switchHandler = () => {
+    setPersonsState({
+    
+    persons: [
+      { name: 'Maximiliam', age:25 },
+      { name: 'Manu', age:29 },
+      { name: 'Stephanie', age:8 }
+    ],
+    
+    }); 
+  
+  }
+
+  return (
+  
+    <div className="App">
+      <h1>Hi, Im  a React App</h1>
+      <button onClick={switchNameHandler}>Switch Name</button>
+      <Person 
+        name={personState.persons[0].name}
+        age={personState.persons[0].age}
+      />
+      <Person 
+        name={personState.persons[1].name}
+        age={personState.persons[1].age}
+      >My Hobbies: Racing </Person>
+      <Person 
+        name={personState.persons[2].name}
+        age={personState.persons[2].age}
+      />
+      
+    </div>
+  )
+
+}
+
+</script>
+<p>Roll back to class based:</p>
+<pre class="js"><code>
+import React, { Component } from &#39;react&#39;;
+import &#39;./App.css&#39;;
+import Person from &#39;./Person/Person&#39;;
+
+
+class App extends Component {
+  state = {
+    persons: [
+      { name: &#39;Max&#39;, age: 28 },
+      { name: &#39;Manu&#39;, age: 29 },
+      { name: &#39;Stephanie&#39;, age: 26 }
+    ],
+    otherState: &#39;some other value&#39;
+  };
+
+  switchNameHandler = () =&gt; {
+    // console.log(&#39;Was clicked!&#39;);
+    // DON&#39;T DO THIS: this.state.persons[0].name = &#39;Maximilian&#39;;
+    this.setState({
+      persons: [
+        { name: &#39;Maximilian&#39;, age: 28 },
+        { name: &#39;Manu&#39;, age: 29 },
+        { name: &#39;Stephanie&#39;, age: 27 }
+      ]
+    });
+  };
+
+  render() {
+    return (
+      &lt;div className=&quot;App&quot;&gt;
+        &lt;h1&gt;Hi, I&#39;m a React App&lt;/h1&gt;
+        &lt;p&gt;This is really working!&lt;/p&gt;
+        &lt;button onClick={this.switchNameHandler}&gt;Switch Name&lt;/button&gt;
+        &lt;Person
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age}
+        /&gt;
+        &lt;Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[1].age}
+        &gt;
+          My Hobbies: Racing
+        &lt;/Person&gt;
+        &lt;Person
+          name={this.state.persons[2].name}
+          age={this.state.persons[2].age}
+        /&gt;
+      &lt;/div&gt;
+    );
+    // return React.createElement(&#39;div&#39;, {className: &#39;App&#39;}, React.createElement(&#39;h1&#39;, null, &#39;Does this work now?&#39;));
+  }
+}
+
+export default App;
+</code></pre>
+<script type="text/javascript">
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+class App extends Component {
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value'
+  };
+
+  switchNameHandler = () => {
+    // console.log('Was clicked!');
+    // DON'T DO THIS: this.state.persons[0].name = 'Maximilian';
+    this.setState({
+      persons: [
+        { name: 'Maximilian', age: 28 },
+        { name: 'Manu', age: 29 },
+        { name: 'Stephanie', age: 27 }
+      ]
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        <Person
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age}
+        />
+        <Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[1].age}
+        >
+          My Hobbies: Racing
+        </Person>
+        <Person
+          name={this.state.persons[2].name}
+          age={this.state.persons[2].age}
+        />
+      </div>
+    );
+    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
+  }
+}
+
+export default App;
+
+</script>
+<p>Stateless vs Statefull</p>
+<p>Antes solo se podía manejar la variable state en Class Based Components.</p>
+<p>Es mejor crear la mayor cantidad de stateless components porque no complicar la aplicación.</p>
+<p>Como este:</p>
+<pre class="js"><code>import React from &#39;react&#39;;
+
+const person = ( props ) =&gt; {
+    return (
+        &lt;div&gt;
+        &lt;p onClick={props.click}&gt;I&#39;m a {props.name} and I&#39;m {props.age}!&lt;/p&gt;
+        &lt;p&gt;{props.children}&lt;/p&gt;
+        &lt;/div&gt;
+    )
+};
+
+export default person;
+</code></pre>
+<script type="text/javascript">
+import React from 'react';
+
+const person = ( props ) => {
+    return (
+        <div>
+        <p onClick={props.click}>I'm a {props.name} and I'm {props.age}!</p>
+        <p>{props.children}</p>
+        </div>
+    )
+};
+
+export default person;
+
+</script>
+<p>De los componentes que manejan los states solo debes tener un par.</p>
+</div>
 </div>

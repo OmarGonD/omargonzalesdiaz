@@ -1,0 +1,90 @@
+---
+title: 'Sumo: herramienta para emailmarketing'
+author: "Omar Gonzáles Díaz"
+date: '2019-05-05'
+categories:
+- email
+- marketing
+description: ¿Cómo funciona Sumo?
+slug: sumo-emailmarketing-tool
+tags:
+- sumo
+- marketing
+- email
+banner: img/banners/banner-sumo.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ¿Qué es sumo?
+
+Sumo es una potente herramienta de email marketing que nos ayuda a generar una lista de todos los usuarios que interactuaron con nuestro sitio, y de una u otra forma se animaron a enviarnos su correo electrónico a nuestra Base de Datos en Sumo.com.
+
+Con esta base de datos, la misma que podemos segmentar (Por ejemplo: usuarios que dejar su correo electrónico porque están interesados en un descuento o usuarios que dejaron su correo electrónico porque están interesados en un producto en concreto).
+
+## Como instalar Sumo
+
+
+Solo tienes que instalar el código de Sumo en todas las páginas de tu sitio web, en la etiqueta `<head></head>`.
+
+El código a instalar lo proporciona la misma página de SUMO, y lo puedes instalar directamente en las páginas de tu sitio o a través de alguna herramienta como Google Tag Manager (también ofrece integración con Wordpress, Shopify, etc).
+
+El código de Sumo se ve así:
+
+
+```{js}
+<script async>(function(s,u,m,o,j,v){j=u.createElement(m);v=u.getElementsByTagName(m)[0];j.async=1;j.src=o;j.dataset.sumoSiteId='el-id-de-tu-sitio-en-sumo.com';v.parentNode.insertBefore(j,v)})(window,document,'script','//load.sumo.com/');</script>
+```
+
+
+Y tendrás que instalarlo en la etiqueta <head></head> de tu sitio web. El código de tu sitio quedaría algo así:
+
+
+```
+<html>
+  <head>
+    <script async> CÓDIGO DE SUMO </script>
+  </head>
+  <body>
+  </body>
+</html>
+```
+
+
+# ¿Cómo usar sumo?
+
+Puedes usar Sumo de modo gratuito o pagando $39 USD mensuales. Para este post vamos a usar la versión gratuita puesto que queremos explorar la herramienta.
+
+
+
+Crear un formulario básico
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%'}
+knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/basic_form.jpg")
+```
+
+
+Crear el formulario
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%'}
+knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/create_form.jpg")
+```
+
+
+Crear la campaña
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%'}
+knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/create_campaign.jpg")
+```
+
+
+Reglas:
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%'}
+knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/rules_0.jpg")
+```
+
