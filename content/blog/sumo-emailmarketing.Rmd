@@ -24,7 +24,7 @@ Sumo es una potente herramienta de email marketing que nos ayuda a generar una l
 
 Con esta base de datos, la misma que podemos segmentar (Por ejemplo: usuarios que dejar su correo electrónico porque están interesados en un descuento o usuarios que dejaron su correo electrónico porque están interesados en un producto en concreto).
 
-## Como instalar Sumo
+## ¿Cómo instalar Sumo?
 
 
 Solo tienes que instalar el código de Sumo en todas las páginas de tu sitio web, en la etiqueta `<head></head>`.
@@ -60,18 +60,22 @@ Puedes usar Sumo de modo gratuito o pagando $39 USD mensuales. Para este post va
 
 En la versión gratuita nos ofrecen las funcionalidades báscias. Esto significa que podemos recolectar los correos de los visitantes a nuestro sitio web, agregarlos a listas, enviarles un correo para agradecerles por haber suscrito a nuestra web; pero, por ejemplo, no podemos personlizar el diseño de el formulario que se muestra.  
 
+<br>
 
-### Este es un ejemplo real de cómo se muestra Sumo en nuestra página web:  
+#### Este es un ejemplo real de cómo se muestra Sumo en nuestra página web:  
 
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/sumo_in_page.jpg")
+knitr::include_graphics("/img/posts/sumo/sumo_in_page.jpg")
 ```
 
 
-Y es lo que les vamos a enseñar en este post.   
+<br>
 
-**No se olviden que primero deben insertar el código de SUMO que les mostré en los primeros párrafos en la cabecera de su código html (es decir, en el <head>).**  
+Y es lo que les vamos a enseñar a lograr en sus propios sitios web con este post.   
+
+**No se olviden que primero deben insertar el código de SUMO que les mostré en los primeros párrafos en la cabecera de su código html.**  
 
 
 
@@ -79,102 +83,128 @@ Y es lo que les vamos a enseñar en este post.
 
 Lo primero es crear un fomulario básico:   
 
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/create_form.jpg")
+knitr::include_graphics("/img/posts/sumo/create_form.jpg")
 ```
 
+<br>
 
 # Diseño del formulario:  
 
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/basic_form.jpg")
+knitr::include_graphics("/img/posts/sumo/basic_form.jpg")
 ```
 
-
+<br>
 
 # Crear la campaña  
 
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/create_campaign.jpg")
+knitr::include_graphics("/img/posts/sumo/create_campaign.jpg")
 ```
 
+<br>
 
 # Reglas:  
 
 En cuanto a reglas, en la versión básica encontré varios opciones básicas muy buenas. Entre ellas: mostrar el formulario si es que la url de la imagen es igual a, si el dispositivo desde el que se ve la web es un celular, etc.   
 
-
-
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/rules_0.jpg")
+knitr::include_graphics("/img/posts/sumo/rules_0.jpg")
 ```
+
+<br>
 
 ## Regla por URL (Path) de la página  
 
+<br>
+
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/rule_1.jpg")
+knitr::include_graphics("/img/posts/sumo/rule_1.jpg")
 ```
+
+<br>
 
 ## Regla: mostrar el formulario si el usuario está en la página de inicio o por el contrario si se encuentra en alguna de las secciones  
 
+<br>
+
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/rule_2_PATH.jpg")
+knitr::include_graphics("/img/posts/sumo/rule_2_PATH.jpg")
 ```
 
-
+<br>
 
 ## Regla: mostrar el formulario de acuerdo al tipo de dispositvo  
 
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/rule_3_DEVICES.jpg")
+knitr::include_graphics("/img/posts/sumo/rule_3_DEVICES.jpg")
 ```
 
+<br>
 
 ## Regla: mostrar el formulario si nuestra página generó una determinada cookie  
 
 ***Esta opción es súper interesante pero solo está disponible para usuarios que pagan por las versión profesional de SUMO.***  
 
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/rule_4_OTHER_cookie_named.jpg")
+knitr::include_graphics("/img/posts/sumo/rule_4_OTHER_cookie_named.jpg")
 ```
 
-
+<br>
 
 ## Registro en formulario exitoso:  
 
 Una vez que el usuario se registró exitosamente en tu sitio web, lo que puedes hacer es:  
 
+<br>
+
 1. Redireccionarlo a alguna página en tu sitio: la página de inicio o una sección en particular.  
 
+<br>
+
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/rule_5_SUCCESS.jpg")
+knitr::include_graphics("/img/posts/sumo/rule_5_SUCCESS.jpg")
 ```
+
+<br>
 
 2. Iniciar automáticamente la descarga de algún archivo para el usuario. Esto es ideal cuando se quiere motivar a los usuarios a registrarse y a cambio se les ofrece un PDF con las últimas tendencias de la industria de su negocio, etc.  
 
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/rule_5_SUCCESS_B.jpg")
+knitr::include_graphics("/img/posts/sumo/rule_5_SUCCESS_B.jpg")
 ```
 
+<br>
 
 También pudes configurar un email personalizado que se enviará a cada usuario que se registre. Basicamente sería un email con el logo de tu empresa y algunas palabras de agradecimiento por registrarse (todo esto es personalizable).  
 
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/rule_5_SUCCESS_C.jpg")
+knitr::include_graphics("/img/posts/sumo/rule_5_SUCCESS_C.jpg")
 ```
 
+<br>
 
 Sin embargo, para lograr esto vas a tener que personalizar algunos registros de tu DNS en el Panel de Control de tu proveedor de hosting:  
-
+  
+<br>
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
-knitr::include_graphics("D:/omargonzalesdiaz/static/img/posts/sumo/custom_email_address.jpg")
+knitr::include_graphics("/img/posts/sumo/custom_email_address.jpg")
 ```
