@@ -21,7 +21,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## ¿Cómo hacer un API con Django/Python?
 
-Como ya explicamos en un post anterior, una API proporciona diferentes URLs (el término correcto es `endpoints`) para hacer consultas a la Base de Datos de una aplicación e incluso transformar la data antes de devolverla a la aplicación que está solicitándo esta información. E incluso accediendo a un `endpoint` puedes eliminar la registros o completamente la base de datos asociada a un API.
+Para realmente entender qué es una API les recomendamos primero leer este otro post:
+[¿Qué es un API?](http://omargonzalesdiaz.rbind.io/blog/2019/05/20/que-es-un-api/).
+
+En resumen, una API proporciona diferentes URLs (el término correcto es `endpoints`) para hacer consultas a la Base de Datos de una aplicación e incluso transformar la data antes de devolverla a la aplicación que está solicitándo esta información. E incluso accediendo a un `endpoint` puedes eliminar la registros o completamente la base de datos asociada a un API.
 
 La estructura de las urls para acceder a los diferentes servicios de la API las define la persona o personas que desarrollan la API y deben documentarla para que otros programadores puedan acceder a ellas desde sus aplicaciones.
 
