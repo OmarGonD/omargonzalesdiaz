@@ -14,19 +14,21 @@ banner: img/banners/django-rest-framework-logo.png
 
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ## ¿Qué es un API?
 
 Una API (siglas de ‘Application Programming Interface’) es un conjunto de reglas (código) y especificaciones que las aplicaciones pueden seguir para comunicarse entre ellas: sirviendo de interfaz entre programas diferentes de la misma manera en que la interfaz de usuario facilita la interacción humano-software. 
 
-En resumen: un API proporciona diferentes URLs (el término correcto es Endpoints) para hacer consultas a la Base de Datos de una aplicación e incluso transformar la data antes de 
+En resumen: un API proporciona diferentes URLs (el término correcto es Endpoints) para hacer consultas a la Base de Datos de una aplicación e incluso transformar la data antes de devolverla a la aplicación que la solicita. 
 
-```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align='center'}
-knitr::include_graphics("/img/posts/django-rest-framework/martercard-blockchain-api.jpg")
+<br>
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align='center'}
+knitr::include_graphics("/img/posts/que-es-un-api/mastercard-blockchain-api.jpg")
 ```
+
+<br>
 
 ## ¿Por qué se usan URLs? 
 
