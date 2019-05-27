@@ -71,7 +71,7 @@ No, lo que se acostumbra a hacer es restringir el acceso a la API a usuarios que
 <br>
 
 
-```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align='center'}
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
 knitr::include_graphics("/img/posts/que-es-un-api/twitter_apps.jpg")
 ```
 
@@ -81,7 +81,7 @@ knitr::include_graphics("/img/posts/que-es-un-api/twitter_apps.jpg")
 
 <br>
 
-```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align='center'}
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
 knitr::include_graphics("/img/posts/que-es-un-api/twitter_keys.jpg")
 ```
 
@@ -116,7 +116,7 @@ En la mayoría de los casos [Postman](https://www.getpostman.com/) es el ambient
 
 <br>
 
-```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align='center'}
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
 knitr::include_graphics("/img/posts/que-es-un-api/postman_get.jpg")
 ```
 
