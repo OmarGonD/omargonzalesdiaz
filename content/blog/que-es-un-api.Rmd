@@ -3,6 +3,15 @@ title: "que-es-un-api"
 author: "omar gonzales diaz"
 date: '2019-05-20'
 output: html_document
+categories:
+- programacion
+- api
+description: ¿Cómo construir un API?
+slug: django-api-parte-i
+tags:
+- django
+- api
+banner: img/banners/django-rest-framework-logo.png
 ---
 
 ```{r setup, include=FALSE}
