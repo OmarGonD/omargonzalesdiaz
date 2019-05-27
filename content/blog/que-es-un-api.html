@@ -1,0 +1,158 @@
+---
+title: "que-es-un-api"
+author: "omar gonzales diaz"
+date: "5/14/2019"
+output: html_document
+---
+
+
+
+<div id="que-es-un-api" class="section level2">
+<h2>¿Qué es un API?</h2>
+<p>Una API (siglas de ‘Application Programming Interface’) es un conjunto de reglas (código) y especificaciones que las aplicaciones pueden seguir para comunicarse entre ellas: sirviendo de interfaz entre programas diferentes de la misma manera en que la interfaz de usuario facilita la interacción humano-software.</p>
+<p>En resumen: un API proporciona diferentes URLs (el término correcto es Endpoints) para hacer consultas a la Base de Datos de una aplicación e incluso transformar la data antes de</p>
+<p><img src="/img/posts/django-rest-framework/martercard-blockchain-api.jpg" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="por-que-se-usan-urls" class="section level2">
+<h2>¿Por qué se usan URLs?</h2>
+<p>Porque la comunicación de una API es básicamente con otros programas, no con humanos. Por lo que no se necesita toda la apariencia gráfica de una página web (botones, imágenes, secciones), por ejemplo.</p>
+</div>
+<div id="como-se-acceder-a-una-api" class="section level2">
+<h2>¿Cómo se acceder a una API?</h2>
+<p>Para acceder a una API hay que tener la URL madre, <strong>/api</strong>. En la mayoría de los casos se accede a través de</p>
+<pre class="js"><code>misitioweb.com/api</code></pre>
+<script type="text/javascript">
+misitioweb.com/api
+</script>
+<p>O podría ser también directamente accediendo a la URL base:</p>
+<pre class="js"><code>misitioweb.com</code></pre>
+<script type="text/javascript">
+misitioweb.com
+</script>
+<p>O como un subdominio:</p>
+<pre class="js"><code>api.misitioweb.com</code></pre>
+<script type="text/javascript">
+api.misitioweb.com
+</script>
+<p>Esto va a depender del desarrollador de la API.</p>
+</div>
+<div id="cualquiera-que-posee-o-conoce-las-urls-de-nuestra-api-puede-acceder" class="section level2">
+<h2>¿Cualquiera que posee o conoce las URLs de nuestra API puede acceder?</h2>
+<p>No, lo que se acostumbra a hacer es restringir el acceso a la API a usuarios que cuenten con una <strong><em>KEY</em></strong> (llave en español). Para obtener una *<strong>API KEY</strong> hay que crear una APP en el sistema al que deseamos acceder.</p>
+<p><br></p>
+<p><strong>Crear APP (para luego obtener las KEYS de acceso)</strong></p>
+<p><br></p>
+<p><img src="/img/posts/django-rest-framework/twitter_apps.jpg" width="60%" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p><strong>Obtener las KEYS en la sección de Keys y Tokens:</strong></p>
+<p><br></p>
+<p><img src="/img/posts/django-rest-framework/twitter_keys.jpg" width="60%" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>Al acceder a la API, ingresando la URL madre</p>
+<pre class="js"><code>
+HTTP 200 OK
+Allow: GET, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    &quot;customers&quot;: &quot;http://127.0.0.1:8002/api/customers/&quot;,
+    &quot;professions&quot;: &quot;http://127.0.0.1:8002/api/professions/&quot;,
+    &quot;data-sheet&quot;: &quot;http://127.0.0.1:8002/api/data-sheet/&quot;,
+    &quot;document&quot;: &quot;http://127.0.0.1:8002/api/document/&quot;
+}
+</code></pre>
+<script type="text/javascript">
+
+HTTP 200 OK
+Allow: GET, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    "customers": "http://127.0.0.1:8002/api/customers/",
+    "professions": "http://127.0.0.1:8002/api/professions/",
+    "data-sheet": "http://127.0.0.1:8002/api/data-sheet/",
+    "document": "http://127.0.0.1:8002/api/document/"
+}
+
+
+</script>
+</div>
+<div id="postman-interactuando-con-apis" class="section level2">
+<h2>Postman: interactuando con APIs</h2>
+<p>Las APIs al ser programas que interactuan con otros programas NO necesitan una interface gráficas. <strong>Pero al momento de desarrollar una API, si se necesita una interface gráfica que nos ayude al desarrollo mismo.</strong></p>
+<p>En la mayoría de los casos <a href="https://www.getpostman.com/">Postman</a> es el ambiente de desarrollo que se utiliza para crear una API (Programa gratuito que te recomiendo instalar para conocer cómo desarrollar una API). Postman es un ambiente de desarrollo para APIs, el más utilizado en la industria del desarrollo web.</p>
+<p><img src="/img/posts/django-rest-framework/postman-get.jpg" width="60%" style="display: block; margin: auto;" /></p>
+<p>Si bien Postman nos facilita el desarrollo de una API, así como la interacción con esta, también nos permite exportar el código necesario para que nuestra aplicación web, o script, puede acceder al mismo <strong>endpoint</strong> (o url). Obteniendo de esta forma la data que necesitamos del programa de un tercera (por ejemplo, Twitter) y muestrar esa data en nuestra aplicación (Una aplicación hecha con Django, un script en Go, etc).</p>
+<pre class="js"><code>
+package main
+
+import (
+    &quot;fmt&quot;
+    &quot;net/http&quot;
+    &quot;io/ioutil&quot;
+)
+
+func main() {
+
+    url := &quot;http://127.0.0.1:8002/api/&quot;
+
+    req, _ := http.NewRequest(&quot;GET&quot;, url, nil)
+
+    req.Header.Add(&quot;User-Agent&quot;, &quot;PostmanRuntime/7.11.0&quot;)
+    req.Header.Add(&quot;Accept&quot;, &quot;*/*&quot;)
+    req.Header.Add(&quot;Cache-Control&quot;, &quot;no-cache&quot;)
+    req.Header.Add(&quot;Postman-Token&quot;, &quot;eaa64c77-ded4-478b-96c2-2577b76c7fc0,a1cdd474-af75-4446-b95b-e1175450eff7&quot;)
+    req.Header.Add(&quot;Host&quot;, &quot;127.0.0.1:8002&quot;)
+    req.Header.Add(&quot;accept-encoding&quot;, &quot;gzip, deflate&quot;)
+    req.Header.Add(&quot;Connection&quot;, &quot;keep-alive&quot;)
+    req.Header.Add(&quot;cache-control&quot;, &quot;no-cache&quot;)
+
+    res, _ := http.DefaultClient.Do(req)
+
+    defer res.Body.Close()
+    body, _ := ioutil.ReadAll(res.Body)
+
+    fmt.Println(res)
+    fmt.Println(string(body))
+
+}
+</code></pre>
+<script type="text/javascript">
+
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "io/ioutil"
+)
+
+func main() {
+
+    url := "http://127.0.0.1:8002/api/"
+
+    req, _ := http.NewRequest("GET", url, nil)
+
+    req.Header.Add("User-Agent", "PostmanRuntime/7.11.0")
+    req.Header.Add("Accept", "*/*")
+    req.Header.Add("Cache-Control", "no-cache")
+    req.Header.Add("Postman-Token", "eaa64c77-ded4-478b-96c2-2577b76c7fc0,a1cdd474-af75-4446-b95b-e1175450eff7")
+    req.Header.Add("Host", "127.0.0.1:8002")
+    req.Header.Add("accept-encoding", "gzip, deflate")
+    req.Header.Add("Connection", "keep-alive")
+    req.Header.Add("cache-control", "no-cache")
+
+    res, _ := http.DefaultClient.Do(req)
+
+    defer res.Body.Close()
+    body, _ := ioutil.ReadAll(res.Body)
+
+    fmt.Println(res)
+    fmt.Println(string(body))
+
+}
+
+</script>
+</div>

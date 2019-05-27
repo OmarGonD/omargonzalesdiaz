@@ -1,0 +1,153 @@
+---
+title: "que-es-un-api"
+author: "omar gonzales diaz"
+date: "5/14/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ¿Qué es un API?
+
+Una API (siglas de ‘Application Programming Interface’) es un conjunto de reglas (código) y especificaciones que las aplicaciones pueden seguir para comunicarse entre ellas: sirviendo de interfaz entre programas diferentes de la misma manera en que la interfaz de usuario facilita la interacción humano-software. 
+
+En resumen: un API proporciona diferentes URLs (el término correcto es Endpoints) para hacer consultas a la Base de Datos de una aplicación e incluso transformar la data antes de 
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align='center'}
+knitr::include_graphics("/img/posts/django-rest-framework/martercard-blockchain-api.jpg")
+```
+
+## ¿Por qué se usan URLs? 
+
+Porque la comunicación de una API es básicamente con otros programas, no con humanos. Por lo que no se necesita toda la apariencia gráfica de una página web (botones, imágenes, secciones), por ejemplo.
+
+
+## ¿Cómo se acceder a una API?
+
+
+Para acceder a una API hay que tener la URL madre, **/api**. En la mayoría de los casos se accede a través de
+
+
+```{js}
+misitioweb.com/api
+```
+
+O podría ser también directamente accediendo a la URL base:
+
+```{js}
+misitioweb.com
+```
+
+O como un subdominio:
+
+```{js}
+api.misitioweb.com
+```
+
+Esto va a depender del desarrollador de la API.
+
+
+## ¿Cualquiera que posee o conoce las URLs de nuestra API puede acceder?
+
+No, lo que se acostumbra a hacer es restringir el acceso a la API a usuarios que cuenten con una ***KEY*** (llave en español). Para obtener una ***API KEY** hay que crear una APP en el sistema al que deseamos acceder.
+
+<br>
+
+**Crear APP (para luego obtener las KEYS de acceso)**
+
+<br>
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align='center'}
+knitr::include_graphics("/img/posts/django-rest-framework/twitter_apps.jpg")
+```
+
+<br>
+
+**Obtener las KEYS en la sección de Keys y Tokens:**
+
+<br>
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align='center'}
+knitr::include_graphics("/img/posts/django-rest-framework/twitter_keys.jpg")
+```
+
+<br>
+
+Al acceder a la API, ingresando la URL madre 
+
+```{js}
+
+HTTP 200 OK
+Allow: GET, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    "customers": "http://127.0.0.1:8002/api/customers/",
+    "professions": "http://127.0.0.1:8002/api/professions/",
+    "data-sheet": "http://127.0.0.1:8002/api/data-sheet/",
+    "document": "http://127.0.0.1:8002/api/document/"
+}
+
+
+```
+
+
+## Postman: interactuando con APIs
+
+
+Las APIs al ser programas que interactuan con otros programas NO necesitan una interface gráficas. **Pero al momento de desarrollar una API, si se necesita una interface gráfica que nos ayude al desarrollo mismo.** 
+
+En la mayoría de los casos [Postman](https://www.getpostman.com/) es el ambiente de desarrollo que se utiliza para crear una API (Programa gratuito que te recomiendo instalar para conocer cómo desarrollar una API). Postman es un ambiente de desarrollo para APIs, el más utilizado en la industria del desarrollo web.
+
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align='center'}
+knitr::include_graphics("/img/posts/django-rest-framework/postman-get.jpg")
+```
+
+
+Si bien Postman nos facilita el desarrollo de una API, así como la interacción con esta, también nos permite exportar el código necesario para que nuestra aplicación web, o script, puede acceder al mismo **endpoint** (o url). Obteniendo de esta forma la data que necesitamos del programa de un tercera (por ejemplo, Twitter) y muestrar esa data en nuestra aplicación (Una aplicación hecha con Django, un script en Go, etc).
+
+
+
+
+```{js}
+
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "http://127.0.0.1:8002/api/"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("User-Agent", "PostmanRuntime/7.11.0")
+	req.Header.Add("Accept", "*/*")
+	req.Header.Add("Cache-Control", "no-cache")
+	req.Header.Add("Postman-Token", "eaa64c77-ded4-478b-96c2-2577b76c7fc0,a1cdd474-af75-4446-b95b-e1175450eff7")
+	req.Header.Add("Host", "127.0.0.1:8002")
+	req.Header.Add("accept-encoding", "gzip, deflate")
+	req.Header.Add("Connection", "keep-alive")
+	req.Header.Add("cache-control", "no-cache")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+
+```
+

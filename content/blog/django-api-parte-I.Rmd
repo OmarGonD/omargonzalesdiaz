@@ -1,0 +1,207 @@
+---
+title: "django api - parte i"
+author: "Omar Gonzáles Díaz"
+date: '2019-05-26'
+categories:
+- programacion
+- api
+description: ¿Cómo construir un API?
+slug: django-api-parte-i
+tags:
+- django
+- api
+banner: img/banners/django-rest-framework-logo.png
+
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ¿Cómo hacer un API con Django/Python?
+
+Como ya explicamos en un post anterior, una API proporciona diferentes URLs (el término correcto es `endpoints`) para hacer consultas a la Base de Datos de una aplicación e incluso transformar la data antes de devolverla a la aplicación que está solicitándo esta información. E incluso accediendo a un `endpoint` puedes eliminar la registros o completamente la base de datos asociada a un API.
+
+La estructura de las urls para acceder a los diferentes servicios de la API las define la persona o personas que desarrollan la API y deben documentarla para que otros programadores puedan acceder a ellas desde sus aplicaciones.
+
+**Gráfico con diferentes endpoints y cómo pueden obtener información (GET), ingresar información (POST), borrar información (DELETE), actualizar información (PATCH)**
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
+knitr::include_graphics("/img/posts/django-api-part-I/api-scopes.png")
+```
+
+Para hacer un API vamos a necesitar las siguientes librerías:
+
+```{python, python.reticulate = FALSE, eval=FALSE}
+pip install djangorestframework
+pip install markdown       # Markdown support for the browsable API.
+pip install django-filter  # Filtering support
+```
+
+
+Luego vas a tener que agregar `'rest_framework'` a tus aplicaciones instaladas en `INSTALLED_APPS` setting.
+
+```{python, python.reticulate = FALSE, eval=FALSE}
+INSTALLED_APPS = (
+    ...
+    'rest_framework',
+)
+```
+
+
+Y si quieres usar la API desde tu navegador web vas a tener implementar las vistas de `login` y `logout` de `REST framework`.
+
+```{python, python.reticulate = FALSE, eval=FALSE}
+urlpatterns = [
+    ...
+    url(r'^api-auth/', include('rest_framework.urls'))
+]
+```
+
+Si necesitan, pueden ver todos los detalles de cómo implementar una API desde la [página oficial Django REST framework](https://www.django-rest-framework.org/).
+
+## Serializers: ¿qué es un serializer?
+
+Entender qué es un serializer es clave si deseas trabajar con APIs. 
+
+En resumen lo que hace un serializer es transformar el `QuerySet` (la consulta en Python que se hace a la base de datos) a formato `JSON` o `XML` (formatos estándar para comunicación entre aplicaciones web). 
+
+Como les comentamos en un post anterior, la idea detrás de desarrollar un API es poder comunicar una aplicación escrita en el __lenguaje X__, con __muchas otras escritas en el mismo lenguaje u en otros muy distintos__; esto a través de `endpoints` (que basicamente son urls específicas según la tarea que se quiera desarrollar - ej. `my-pet-api/customers` para crear, borrar o actualizar clientes, etc.)
+
+Sin embargo, en programación **no** existe un ***lenguaje universal*** para desarrollar y utilizar aplicaciones. Existen muchos lenguajes de programación como `R`, `Python`, `Ruby`, etc. 
+
+Lo que sí existen  son formatos estándar para transmitir información entre aplicaciones en la web: `XML`, `JSON`, `YALM`, entre otros. No importa en qué lenguaje se desarrolle la API, el objetivo es que el output que genere esté en alguno de los formatos antes mencionados para que esta información puede ser consumida y transformada en cualquier otra aplicación. Ej. Una API desarrollada en Django/Python devuelve data en formato JSON, que puede ser consumida por una aplicación desarrollada en Java, que lo que finalmente hace es mostrarle un gráfico de barras a sus usuarios (en base a la información que obtuvo del API).
+
+
+
+
+> En resumen: un serializer lo que hace es transformar la respuesta de nuestra aplicación en un formato estándar para que otras aplicaciones puedan hacer eso de esta data. Un serializer transforma la data obtenida por un QuerySet en formato JSON o XML. 
+
+En el siguiente gráfico se aprecia como el `serializer` transforma la data y la devuelve al `ViewSet` quien es el responsable final de responder la consulta que hicieron a nuestra API al ingresar la URL: `/customer/1`.
+
+
+
+
+
+### Modelo de Django que generará la tabla en nuestra base de datos para almacenar DataSheets
+
+Como todo proyecto con Django, las tablas de nuestra base de datos se crean a través de los modelos. 
+
+Este es un modelo en Django que nos permitirá crear la tabla en nuestra base de datos PostgreSQL, que almacenaremos en Heroku.com.
+
+Los modelos para una API no tienen nada de particular, los mismos modelos podrían ser usados en una aplicación regular de Django.
+
+**models.py**
+
+```{python, python.reticulate = FALSE, eval=FALSE}
+from django.db import models
+
+class DataSheet(models.Model):
+    description = models.CharField(max_length=50)
+    historical_data = models.TextField()
+```
+
+
+### Acceder a la tabla creada por este modelo desde un endpoint
+
+
+Sin embargo, para poder acceder a ese modelo, es decir, a esa tabla en nuestra base de datos desde un `endpoint` (ej: my-test-api/datasheets) de la API, es necesario utilizar un `serializer`.
+
+Como ven el serializer utiliza como base el modelo DataSheet y le podemos especificar que campos queremos que sean accesibles desde la API.
+
+**¿Por qué es necesario un serializer?**
+
+Al desarrollar un API es necesario hacer uso de serializers que transformen la consulta que se hace a la base de datos con Python a un formato estandar para que otra aplicación (desarrollada con un lenguaje totalmente distinto) pueda consumir esta información. Para esto se utilizan los formatos estandar: `JSON` o `XML`, entre otros.
+
+
+**serializers.py**
+
+
+```{python, python.reticulate = FALSE, eval=FALSE}
+from rest_framework import serializers
+from .models import DataSheet
+
+class DataSheetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DataSheet
+        fields = ('id', 'description', 'historical_data')
+```
+
+
+**views.py**
+
+```{python, python.reticulate = FALSE, eval=FALSE}
+
+from .serializers import *
+
+class DataSheetViewSet(viewsets.ModelViewSet):
+    queryset = DataSheet.objects.all()
+    serializer_class = DataSheetSerializer
+    
+```
+
+
+### Establecer los endpoints
+
+En el archivo urls.py vamos a importar:
+
+`from rest_framework import routers` para establecer las urls que van a ser de acceso público, y definir qué url (o endpoint) va a ejecutar qué comando y que daba va a devolver desde nuestra base de datos o va a modificar en ella misma.
+
+Con esta línea `path('api/', include(router.urls))`, estamos determinando que cada vez que el acceso a la api es `my-pet-api/api` (el nombre del host + /api).
+
+Luego el resto de endpoints serán de la forma 
+
+ * `my-pet-api/api/customers`, 
+ * `my-pet-api/api/professions`,
+ * `my-pet-api/api/data-sheet`,
+ * `my-pet-api/api/document`
+ 
+ 
+
+
+
+
+```{python, python.reticulate = FALSE, eval=FALSE}
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework import routers
+from core.views import *
+
+router = routers.DefaultRouter()
+router.register(r'customers', CustomerViewSet)
+router.register(r'professions', ProfessionViewSet)
+router.register(r'data-sheet', DataSheetViewSet)
+router.register(r'document', DocumentViewSet)
+
+urlpatterns = [
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
+    path('admin/', admin.site.urls),
+]
+```
+
+
+### Acceder a la API por la interfaz gráfica
+
+
+Después de ejecutar los comandos para crear nuestra Base de Datos:
+
+```{python, python.reticulate = FALSE, eval=FALSE}
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver 8004 # o cualquier otro puerto que elijas
+```
+
+<br>
+
+Ya podremos ejecutar nuestra aplicación en local y podemos acceder a la interface navegable (pensada para los otros usuarios humanos, no otras aplicaciones).
+
+<br>
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align='center'}
+knitr::include_graphics("/img/posts/django-api-part-I/api-interface.png")
+```
+
+<br>
