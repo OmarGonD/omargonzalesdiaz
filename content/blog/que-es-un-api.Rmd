@@ -70,8 +70,9 @@ No, lo que se acostumbra a hacer es restringir el acceso a la API a usuarios que
 
 <br>
 
-```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align='center'}
-knitr::include_graphics("/img/posts/django-rest-framework/twitter_apps.jpg")
+
+```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align='center'}
+knitr::include_graphics("/img/posts/que-es-un-api/twitter_apps.jpg")
 ```
 
 <br>
@@ -80,8 +81,8 @@ knitr::include_graphics("/img/posts/django-rest-framework/twitter_apps.jpg")
 
 <br>
 
-```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align='center'}
-knitr::include_graphics("/img/posts/django-rest-framework/twitter_keys.jpg")
+```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align='center'}
+knitr::include_graphics("/img/posts/que-es-un-api/twitter_keys.jpg")
 ```
 
 <br>
@@ -113,12 +114,13 @@ Las APIs al ser programas que interactuan con otros programas NO necesitan una i
 
 En la mayoría de los casos [Postman](https://www.getpostman.com/) es el ambiente de desarrollo que se utiliza para crear una API (Programa gratuito que te recomiendo instalar para conocer cómo desarrollar una API). Postman es un ambiente de desarrollo para APIs, el más utilizado en la industria del desarrollo web.
 
+<br>
 
-
-```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align='center'}
-knitr::include_graphics("/img/posts/django-rest-framework/postman-get.jpg")
+```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align='center'}
+knitr::include_graphics("/img/posts/que-es-un-api/postman_get.jpg")
 ```
 
+<br>
 
 Si bien Postman nos facilita el desarrollo de una API, así como la interacción con esta, también nos permite exportar el código necesario para que nuestra aplicación web, o script, puede acceder al mismo **endpoint** (o url). Obteniendo de esta forma la data que necesitamos del programa de un tercera (por ejemplo, Twitter) y muestrar esa data en nuestra aplicación (Una aplicación hecha con Django, un script en Go, etc).
 
