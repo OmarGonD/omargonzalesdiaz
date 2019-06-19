@@ -41,7 +41,7 @@ knitr::include_graphics("/img/posts/web-scrapping/el_comercio_editoriales_app.pn
 <br>
 <br>
 
-En otros tutoriales les enseñaré como crear esta app en Django, y subirla a Heroku. También como hacer gráficos con la librería D3, una de las librerías gráficas más potentes, utilizada por medios como The Whasingtong Post para elaborar gráficos dinámicos, entre otros. 
+En otros tutoriales les enseñaré cómo crear esta app en Django y subirla a Heroku. También cómo hacer gráficos con la librería D3, una de las librerías gráficas más potentes. Librería utilizada por medios como The Washington Post para elaborar gráficos dinámicos, entre otros. 
 
 
 [Ver los mejores gráficos del 2018 del Washingtong Post](https://www.washingtonpost.com/graphics/2018/ns/best-graphics/?utm_term=.32124fb3dc7a)
