@@ -5,7 +5,7 @@ date: '2019-08-15'
 categories:
 - webscrapping
 description: comprativo de tvs
-slug: comparativo-tvs-2019
+slug: comparativo-tvs2019
 tags:
 - webscrapping
 banner: img/banners/tvs.jpg
