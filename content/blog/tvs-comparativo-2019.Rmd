@@ -1,0 +1,1042 @@
+---
+title: "Compartivo TVs al 2019"
+author: "Omar Gonzáles Díaz"
+date: '2019-08-15'
+banner: img/banners/tvs.jpg
+output: html_document
+---
+  
+  
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+</br>
+</br>
+</br>
+  
+
+# Principales Ecommerce del Perú - Análisis descriptivo
+
+
+</br>
+</br>
+
+
+El 2017 se hizo pública nuestra primera investigación sobre la oferta de TVs en línea por parte de los principales protagonistas de aquel entonces: Falabella, Ripley y Linio. La cuál tuvo gran acogida por parte de nuestros lectores, con recomendaciones y fue compartida por muchos en sus redes. ¡Gracias!
+
+Este año decidimos actualizar esta investigación e incluir a otros E-commerce que han ingresado con ofertas de Tvs interesantes: La Curacao (del Grupo Efe), Tottus y Wong.
+
+Si bien el análisis comparativo de año a año que mostramos en esta ocasión se enfocará principalmente en los 3 E-Commerce que trabajamos años atrás; se consideró necesario mostrar a grandes rasgos la situación de los 5 principales ofertantes de TVs online. Lo que nos servirá como base para que en próximos años este análisis se haga sobre el total de los E-Commerce vigentes en nuestro país.
+
+Finalmente, indicar que esta es una investigación descriptiva. Lo que queremos es mostrar los datos que encontramos e inferir algunos comentarios que se pueden observar. No es el objetivo de esta entrada analizar a profundidad el por qué de cada una de las estrategias de marketing de cada empresa; por el contrario, mencionaremos algunos datos resaltantes que se observan en los 3 ecommerce más importantes del país: Linio, Ripley y Falabella.
+
+Para este análisis se utilizó el lenguaje de programación R en la extracción de datos de cada uno de los ecommerce. El código completo lo encontrarán al final, en caso quisieran reproducir los resultados mostrados en este post.
+
+__Nota:__ No pudimos actualizar los scripts con la data del 2018, por lo que no se muestran datos de ese año. Ya hemos encontrado la forma para que esto no se repita a futuro y podemos tener un análisis continuo en próximas oportunidades.
+
+
+</br>
+</br>
+
+## Sobre los datos
+
+</br>
+
+
+Para obtener los datos ingresamos a las sección de televisores de los 3 ecommerce estudiados.
+
+Toda página web tiene una estructura HTML que debe respetar y con la cuál debe ser consistente. Aprovechando estas 2 características es que podemos programar scripts que, en base a la estructura de cada Ecommerce, recoja los siguientes datos de cada uno de los televisores publicitados: 
+
+**a) Marca, b) Nombre del producto, c) Precio actual y d) Precio antes**.
+
+Para este proposito se utilizó el paquete [RSelenium](https://cran.r-project.org/web/packages/RSelenium/index.html). Este paquete utiliza el web drive [Selenium 2.0](https://seleniumhq.github.io/docs/wd.html) para automatizar la navegación en un navegador web como Chrome o Firefox.
+
+
+__Imporante:__ Al trabajar los datos se tuvieron que eliminar productos que aparecen en la sección televisores de algunos ecommerce, pero que realmente no lo son (Por ejemplo: racks de TVs, Controles remotos, cables, etc.).
+
+También notamos que apartir del 16/08 Falabella removió los TVs de mayor precio, y ahora solo encontramos que el televisor más costoso está a S/5,999. Cuando hace unos días el precio mayor era de S/ 29,999. Esperaremos unos días para actualizar la información mostrada, a fin de evitar nuevos cambios que alteren los resultados.
+
+
+</br>
+</br>
+
+
+```{r tvs, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+library(dplyr)
+library(ggplot2)
+library(hrbrthemes)
+library(scales)
+library(tibble)
+library(plotly)
+library(repmis)
+library(knitr)
+library(formattable)
+library(scales)
+
+
+
+
+
+
+tvs <- source_data("https://www.dropbox.com/s/ocfxqhe3vkyzhop/tvs-2019.csv?raw=1")
+
+
+
+
+         
+         
+
+brand_tvs_colors <- c("hisense" = "#F39EF7", "sony" = "#003366","panasonic" = "#FCB462",
+                      "samsung" = "#7ec0ee", "lg" = "#A21420",
+                      "aoc" = "#9DCC27", "sharp" = "#BEBBDA", "hyundai" = "#FCB442",
+                      "haier" = "#454545", "imaco" = "#e6f029", "royal" = "#cb7dff",
+                      "olitec" = "#1472c4", "nex" = "#d3d9de", "daewoo" = "#333333",
+                      "altron" = "#e69729", "blackline" = "#87765f", "miray" = "#63b33b",
+                      "king master" = "#19bfba", "xenon" = "#a640bd", "jvc" = "#d19b90", "philips" = "#ff5c33", "prima" = "#33ccff", "continental" = "#d24dff",
+                      "recco" = "#00e673", "ddesign" = "#c68c53",
+                      "prolink" = "#ff4d4d")
+
+
+
+
+ecommerce_colors <- c("linio" = "#ff5500","ripley" = "#802D69","falabella" = "#aad500",
+                      "wong" = "#ec1c24", "tottus" = "#76b703", "lacuracao" = "#ffec02")
+
+
+```
+
+
+
+## Cantidad TVs por Ecommerce
+
+</br>
+
+### Falabella es el único que incrementó la variedad de televisores ofertados, mientras que Ripley y Linio disminuyeron su oferta.
+
+</br>
+
+El 2019, Falabella es el único ecommerce que incrementó la cantidad de televisores ofertados. Esta tienda online ofrece 148 televisores, un incremento del %174 respecto al 2017 (solo contaban con 54 tvs).
+
+Por otro lado, Ripley y Linio disminuyeron su oferta de TVs. Ripley ahora solo ofrece 65 tvs (-41.44% respecto al 2017), mientras que Linio ofrece 181 televisores (-57.21%).
+
+Hace un par de años, Barbara E. Kahn, Profesora de Marketing en la Wharton School de la Universidad de Pennsylvania, y Claudia Townsend, profesora de Marketing en la Universidad de Miami, publicaron [The ‘Visual Preference Heuristic’: The Influence of Visual versus Verbal Depiction on Assortment Processing, Perceived Variety, and Choice Overload](http://www.jcr-admin.org/files/pressPDFs/101613155527_Townsend_Article.pdf). En este artículo analizan el comporamiento de los consumidores al tomar decisiones en el momento de compra. 
+
+Quiero rescatar 2 conclusiones de ese estudio:
+
+* “If there’s too much variety and the choices feel overwhelming, people delay their purchase.”
+
+* More choice or less? 'Sometimes, artificially limiting choice would be better for both sides
+
+
+Y quisiera resaltar la segunda conclusión:
+
+* A veces, limitar (artificialmente) la cantidad de opciones es mejor para ambas partes - para el cliente y para la misma tienda -.
+
+</br>
+</br>
+
+## Cantidad de TVs ofertados por los 5 principales E-Commerce
+
+</br>
+</br>
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, results='hold', plotly=TRUE, fig.align = 'center', fig.width=10}
+
+
+
+############################################
+### Total TVS 2017 vs 2016 por Ecommerce ###
+############################################
+
+
+
+### Remover de Linio lo que no son TVs #####
+
+
+tvs_todas <- tvs %>%
+             filter(pulgadas < 90, !is.na(marca),
+                    periodo == 2019)
+
+
+tvs_todas_cantidad <- tvs_todas  %>%
+  group_by(periodo, ecommerce) %>%
+  summarise(cantidad = length(marca))
+
+
+
+tvs <- tvs %>%
+  filter(pulgadas < 90, !is.na(marca),
+         ecommerce %in% c("falabella", "ripley", "linio"))
+
+
+
+
+tvs_cantidad <- tvs  %>%
+  group_by(periodo, ecommerce) %>%
+  summarise(cantidad = length(marca))
+
+
+
+
+tvs_cantidad <- tvs_cantidad %>%
+  group_by(ecommerce) %>% 
+  mutate(diferencia_porcentual = (cantidad - lag(cantidad))/lag(cantidad))
+
+
+
+tvs_cantidad[is.na(tvs_cantidad)] <- 0
+
+
+
+
+
+
+
+tvs_cantidad$ecommerce <- factor(tvs_cantidad$ecommerce, levels = c("linio",
+                                                                    "ripley",
+                                                                    "falabella",
+                                                                    "tottus",
+                                                                    "wong",
+                                                                    "lacuracao"),
+                                 ordered = T)
+
+
+
+
+
+
+
+tvs_cantidad$periodo <- factor(tvs_cantidad$periodo, levels = c(2016,2017, 2019),
+                               ordered = T)
+
+tt1 <- ""
+stt1 <- ""
+# tt1 <- "Ecommerce con más TVs"
+# stt1 <- "Linio, Ripley y Falabella son los 3 principales ecommerce del Perú. \n"
+cptn <- "\nogonzales.com | Data Analyst"
+
+
+
+
+tvs_todas <- ggplot(tvs_todas_cantidad, aes(x=ecommerce, y= cantidad, fill = ecommerce)) + 
+  geom_bar(stat = "identity", width = .7) +
+  facet_wrap(~ periodo, ncol = 3, nrow = 1) +
+  theme_bw() +
+  scale_fill_manual("ecommerce",
+                    values = ecommerce_colors) +
+  labs(title = "\n",
+       x = "", y = "") +
+  #theme_ipsum_rc(grid = "Y") +
+  theme(axis.text.x = element_text(colour="grey10",size=12,hjust=.5,vjust=.5,face="plain"),
+        axis.text.y = element_text(colour="grey10",size=8,hjust=0,vjust=0,face="plain"),  
+        axis.title.x = element_text(colour="grey40",size=6,angle=0,hjust=.5,vjust=0,face="plain"),
+        axis.title.y = element_text(colour="grey40",size=6,angle=90,hjust=.5,vjust=.5,face="plain"),
+        plot.title = element_text(size = 24,vjust=2,face="bold", margin=margin(0,0,30,0)),
+        plot.subtitle = element_text(vjust=2, size = 16),
+        plot.caption = element_text(vjust=2, size = 8),
+        panel.border = element_rect(colour = "white"),
+        legend.position = "none",
+        strip.text = element_text(size = 18, hjust = 0.08, vjust = -0.5),
+        strip.background = element_rect(colour = "white", fill = "white"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()) +
+  #geom_text(aes(label=cantidad), vjust=-0.6, size = 4) +
+  ylim(0, 300)
+
+
+
+ggplotly(tvs_todas, tooltip=c("cantidad"), width = 920, height = 600)  %>% 
+  config(displayModeBar = FALSE)
+
+
+```
+
+
+</br>
+</br>
+
+## Cantidad de TVs histórico (2016, 2017 y 2019)
+
+</br>
+</br>
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, results='hold', plotly=TRUE, fig.align = 'center', fig.width=10}
+
+cantidad_tvs <- ggplot(tvs_cantidad, aes(x=ecommerce, y= cantidad, fill = ecommerce)) + 
+  geom_bar(stat = "identity", width = .7) +
+  facet_wrap(~ periodo, ncol = 3, nrow = 1) +
+  theme_bw() +
+  scale_fill_manual("ecommerce",
+                    values = ecommerce_colors) +
+  labs(title = "\n",
+       x = "", y = "") +
+  #theme_ipsum_rc(grid = "Y") +
+  theme(axis.text.x = element_text(colour="grey10",size=12,hjust=.5,vjust=.5,face="plain"),
+        axis.text.y = element_text(colour="grey10",size=8,hjust=0,vjust=0,face="plain"),  
+        axis.title.x = element_text(colour="grey40",size=6,angle=0,hjust=.5,vjust=0,face="plain"),
+        axis.title.y = element_text(colour="grey40",size=6,angle=90,hjust=.5,vjust=.5,face="plain"),
+        plot.title = element_text(size = 24,vjust=2,face="bold", margin=margin(0,0,30,0)),
+        plot.subtitle = element_text(vjust=2, size = 16),
+        plot.caption = element_text(vjust=2, size = 8),
+        panel.border = element_rect(colour = "white"),
+        legend.position = "none",
+        strip.text = element_text(size = 18, hjust = 0.08, vjust = -0.5),
+        strip.background = element_rect(colour = "white", fill = "white"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()) +
+  #geom_text(aes(label=cantidad), vjust=-0.6, size = 4) +
+  ylim(0, 600)
+
+
+
+ggplotly(cantidad_tvs, tooltip=c("cantidad"), width = 920, height = 600)  %>% 
+  config(displayModeBar = FALSE)
+
+```
+
+</br>
+</br>
+
+### Cambio porcentual de la cantidad de televisores por Ecommerce
+
+</br>
+</br>
+
+En este cuadro vemos el cambio radical que hubo en la cantidad de TVs ofertada por Linio. Esto debido a su naturaleza "marketplace".
+
+</br>
+</br>
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+tvs_cantidad$diferencia_porcentual <- percent(tvs_cantidad$diferencia_porcentual)
+
+tvs_cantidad <- tvs_cantidad %>%
+  filter(ecommerce %in% c("falabella", "ripley", "linio"))
+
+
+formattable(tvs_cantidad, list(
+  diferencia_porcentual = color_tile("lightblue", "green3"),
+  cantidad = color_tile("yellow", "orange")))
+
+
+
+```
+
+
+</br>
+</br>
+
+## Pulgadas vs Precio
+
+Este gráfico nos muestra la tendencia entre pulgadas vs precio. 
+
+</br>
+
+
+**2019:** vemos que Falabella es el que más TVs de precios altos tiene. Mientras que Ripley y Linio no ofertas TVs de más de S/ 10,000 soles.
+
+**2016:** este año se vio una tendencia clara en los 3 ecommerce, el límite en pulgadas para todos los ecomerce, de cualquier marca, era 65 pulgadas. Solo se observan 4 excepciones, 2 en falabella y 2 en linio; se trata de televisores de 75 pulgadas.
+
+**2017:** si bien aún parece que los 3 ecommerce optan por contar con varios Tvs de 65 pulgada, se observa una mayor oferta de TVs de mayor tamaño, principalmente de 75 y 86 pulgadas.
+
+</br>
+</br>
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+################################################
+####### Scaterplot Pulgadas vs Precios #########
+################################################
+
+
+
+
+tv_pulgadas_vs_pulgadas <- tvs %>% 
+  group_by(periodo, ecommerce, marca, pulgadas) %>%
+  filter(pulgadas <= 90, marca != "xenon") 
+
+
+
+
+tv_pulgadas_vs_pulgadas$periodo <- factor(tv_pulgadas_vs_pulgadas$periodo, levels = c(2019, 2017,2016), ordered = T)
+
+tv_pulgadas_vs_pulgadas$marca <- as.factor(tv_pulgadas_vs_pulgadas$marca)
+
+
+pulgadas_precio <- ggplot(tv_pulgadas_vs_pulgadas, aes(x = pulgadas, y = precio_actual, text = sprintf("S/ %s", comma(precio_actual)))) + 
+  geom_point(aes(color=marca),size = 2,alpha = 0.4) +
+  facet_grid(ecommerce ~ periodo, switch = "y") +
+  theme_bw() +
+  theme(axis.text.x = element_text(colour="grey10",size=10,hjust=.5,vjust=.5,face="plain"),
+        axis.text.y=element_blank(),axis.ticks=element_blank(),  
+        axis.title.x = element_text(colour="grey40",size=12,angle=0,hjust=.5,vjust=0,face="plain"),
+        axis.title.y = element_text(colour="grey40",size=12,angle=90,hjust=.5,vjust=.5,face="plain"),
+        legend.position = "none",
+        plot.title = element_text(size = 24,vjust=4, face="bold"),
+        plot.subtitle = element_text(vjust=2, size = 8),
+        plot.caption = element_text(vjust=2, size = 8),
+        legend.title = element_text(colour="grey40",size=14,hjust=.5,vjust=.5,face="bold"),
+        legend.text = element_text(colour="grey10", size=18, face="plain"),
+        panel.border = element_rect(colour = "white"),
+        strip.text = element_text(size = 12, hjust = 0.05, vjust = -0.5),
+        strip.background = element_rect(colour = "white", fill = "white"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()) +
+  #scale_y_continuous(label=comma, limits = c(0,36000)) +
+  #scale_x_continuous(label=comma, limits = c(0,100)) +
+  labs(title = "", subtitle = "", caption = "",
+       x = "pulgadas \n", y = "Precio en S/.")
+
+
+ggplotly(pulgadas_precio, tooltip=c("marca", "pulgadas", "text"))  %>% 
+  config(displayModeBar = FALSE)
+
+
+```
+
+</br>
+</br>
+</br>
+
+## TVs por rangos de Precio
+
+
+Se observa una mayor cantidad de productos en el rangos **S/.500 a S/.1,500**. 
+
+La mayor cantidad de televisores se sigue situando en el rango de  **S/.500 y S/.1,500** soles.  
+
+Mientras que se observa que la cantidad de tvs en el rango S/ 3,500 a S/ 4,500 es la que más se redujo. En este rango de precios, Linio pasó de tener 16 tvs el 2017 a tener solo 1 tv este 2019.
+
+</br>
+</br>
+
+```{r pressure, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+############################################
+### TVS 2017 vs 2016 por rangos de Precio ###
+############################################
+
+
+
+
+
+tvs_rangos <- tvs %>%
+  group_by(periodo, ecommerce, rangos) %>%
+  summarise(cantidad = length(rangos))
+
+
+
+
+tvs_rangos$periodo <- factor(tvs_rangos$periodo, levels = c(2016,2017, 2019),
+                            ordered = T)
+
+
+
+tvs_cantidad$ecommerce <- factor(tvs_cantidad$ecommerce, levels = c("linio",
+                                                                    "ripley",
+                                                                    "falabella",
+                                                                    "tottus",
+                                                                    "wong",
+                                                                    "lacuracao"),
+                                 ordered = T)
+
+
+
+
+
+
+
+tvs_rangos$rangos <- factor(tvs_rangos$rangos, levels = c("< S/ 500",
+                                                          "S/ 500 - S/ 1,500",
+                                                          "S/ 1,500 - S/ 2,500",
+                                                          "S/ 2,500 - S/ 3,500",
+                                                          "S/ 3,500 - S/ 4,500",
+                                                          "> S/ 4,500"),
+                            ordered = T)
+
+
+# To use for fills, add
+
+###
+
+### No usar t?tulo porque no entra en los l?mites del
+### formato de la p?gina web. 
+
+
+#tt2 <- "Cantidad de TVs seg?n rangos de precio"
+tt2 <- ""
+stt2 <- "\n"
+
+
+
+tvs_por_rangos_de_precio <- ggplotly(ggplot(tvs_rangos, aes(x = rangos, y = cantidad, fill = ecommerce)) +
+                                      geom_bar(stat = "identity") + 
+                                      scale_fill_manual("ecommerce",
+                                                        values = ecommerce_colors) +
+                                      facet_grid(~ periodo) +
+                                      theme_bw() +
+                                      coord_flip() +
+                                      #theme_ipsum_rc(grid = "X") +
+                                      theme(axis.text.x = element_text(colour="grey10",size=10,hjust=.5,vjust=.5,face="plain"),
+                                            axis.text.y = element_text(colour="grey10",size=10,hjust=1,vjust=0,face="plain"),  
+                                            axis.title.x = element_text(colour="grey40",size=16,angle=0,hjust=.5,vjust=0,face="plain"),
+                                            axis.title.y = element_text(colour="grey40",size=16,angle=90,hjust=.5,vjust=.5,face="plain"),
+                                            plot.title = element_text(size = 24,vjust=4, face="bold"),
+                                            plot.subtitle = element_text(vjust=2, size = 16),
+                                            plot.caption = element_text(vjust=2, size = 16),
+                                            panel.border = element_rect(colour = "white"),
+                                            legend.position = "none",
+                                            strip.text = element_text(size = 18, hjust = 0.01, vjust = -0.5),
+                                            strip.background = element_rect(colour = "white", fill = "white"),
+                                            panel.grid.major.y = element_blank(),
+                                            panel.grid.minor.y = element_blank()) +
+                                      #geom_text(aes(label=cantidad), hjust=-0.25, size = 4) +
+                                     ylim(0, 300) +
+                                      labs(title = tt2, subtitle = stt2, caption = cptn,
+                                           x = "", y = ""),
+                                    tooltip=c("cantidad", "ecommerce"))
+
+
+
+tvs_por_rangos_de_precio %>% 
+  config(displayModeBar = FALSE) 
+
+                                    
+```
+
+
+</br>
+</br>
+
+
+## Distribución de precios por ecommerce
+
+
+
+
+El 2019 Falabella tiene la mayor cantidad de outliers. Este retail concentra la mayor parte de sus televisores en el rango hasta los S/ 7,999. Luego tiene varios TVs que se escapan a este rango, el de mayor precio cuesta _S/ 29,999_, hay otro de S/ 24,999.  En años anteriores los TVs ofertados por Falabella costaban como máximo S/ 19,299.
+
+
+Nota: Por otro lado, Lineo y Ripley concentran su oferta en rangos de precios bien definidos. Son pocos los outliers y los precios no son tan dispares. Excepto el _outlier_ con mayor precio de Ripley, que también cuesta _S/ 29,999_ .
+
+En años anteriores notabamos que la cantidad de _outliers_ se había incrementado notoriamente tanto en Linio como en Ripley (2017 vs 2016). Mientras que esto no sucedía en Falabella, que se mantenía con 3 televisores con precios considerados como _outliers_.
+
+
+</br>
+</br>
+
+
+```{r boxplot-precio-ecommerce, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+
+
+
+tvs_precios <- tvs  
+
+
+
+
+
+
+tvs_precios$periodo <- factor(tvs_precios$periodo, levels = c(2016,2017, 2019),
+                              ordered = T)
+
+
+
+tvs_cantidad$ecommerce <- factor(tvs_cantidad$ecommerce, levels = c("linio",
+                                                                    "ripley",
+                                                                    "falabella",
+                                                                    "tottus",
+                                                                    "wong",
+                                                                    "lacuracao"),
+                                 ordered = T)
+
+
+
+# tvs_precios$precio_actual <- prettyNum(tvs_precios$precio_actual, big.mark=",",scientific=FALSE) #EDIT
+# tvs_precios$precio_actual <- paste("S/", tvs_precios$precio_actual, sep=" ")
+
+
+
+p <- plot_ly(tvs_precios, x = ~periodo, y = ~precio_actual, color = ~ecommerce, 
+        colors = ecommerce_colors) %>%
+  add_boxplot() %>%
+  layout(boxmode = "group",
+         title = "Distribución de precios por Ecommerce",
+         yaxis = list(
+         hoverformat = '\\S\\/,.2f'
+          )) %>% 
+ 
+  config(displayModeBar = FALSE) 
+
+p
+
+
+### ripley ###
+
+
+tvs_ripley <- tvs[tvs$ecommerce == "ripley",]
+
+
+### falabella ###
+
+tvs_falabella <- tvs[tvs$ecommerce == "falabella",]
+
+
+### linio ###
+
+tvs_linio <- tvs[tvs$ecommerce == "linio",]
+
+
+
+tvs_linio_parte1 <- tvs_linio %>%
+  filter(marca %in% c("lg", "aoc","imaco",
+                      "royal","panasonic",
+                      "samsung", "sony", "olitec",
+                      "haier", "nex"))
+
+
+
+
+tvs_linio_parte2 <- tvs_linio %>%
+  filter(marca %in% c("daywoo","altron","blackline",
+                      "miray","hisense", "king master",
+                      "xenon", "hyundai", "jvc"))
+
+
+
+
+
+
+
+
+
+
+#########################################################
+### MARCAS DE TV POR rangos DE PRECIO - EN PORCENTAJES ###
+#########################################################
+
+
+
+```
+
+</br>
+</br>
+
+### Ripley
+
+
+En el rango de S/ 3,500 a S/ 4,500 ingresó la marca Philips.
+
+Si bien en el 2017 la marca AOC estaba en el rango de S/ 1,500 a S/ 2,500 (y se venía reduciendo su presencia, en el 2016 estaba marca ocupaba el 10% y el 2017 ocupó solo el 4.76%); el 2019 esta marca desapareció de este rango de precios. Este año solo la encontramos en los rangos más bajos: en los televisores menores a S/ 1,500.
+
+También notamos que Hisense, marca China de televisores, hizo su ingreso en este ecommerce. Aunque solo la encontramos en el rango S/ 500 a S/ 1,500.
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+### Ripley
+
+
+
+tvs_ripley_tvs_por_rangos <- tvs_ripley  %>%
+                            group_by(periodo, rangos, marca) %>%
+                            summarise(cantidad.marca = length(marca)) %>% 
+                            #mutate(porcentaje = paste0(round(cantidad.marca/sum(cantidad.marca)*100,2),'%'))
+                            mutate(porcentaje_tvs = round(cantidad.marca/sum(cantidad.marca),4))
+
+
+
+
+
+
+tvs_ripley_tvs_por_rangos$periodo <- factor(tvs_ripley_tvs_por_rangos$periodo, levels = c(2016,2017, 2019),
+                                         ordered = T)
+
+
+
+
+
+
+
+tvs_ripley_tvs_por_rangos$rangos <- factor(tvs_ripley_tvs_por_rangos$rangos, levels = c("< S/ 500",
+                                                          "S/ 500 - S/ 1,500",
+                                                          "S/ 1,500 - S/ 2,500",
+                                                          "S/ 2,500 - S/ 3,500",
+                                                          "S/ 3,500 - S/ 4,500",
+                                                          "> S/ 4,500"),
+                          ordered = T)
+
+
+
+
+
+
+
+#tt3 <- "Ripley.com.pe \nmarcas de tvs por rangos de precio en porcentajes %"
+tt3 <- ""
+stt3 <- "\n"
+
+
+tt5 <- ""
+stt5 <- "\n"
+
+
+
+ggplotly(ggplot(tvs_ripley_tvs_por_rangos, aes(x=rangos, y= porcentaje_tvs ,fill=marca, text = percent(porcentaje_tvs))) + 
+  geom_bar(stat = "identity", width = .7) +
+  facet_grid(~ periodo) +
+  coord_flip() +  
+  theme_bw() +
+  theme(axis.text.x = element_text(colour="grey20",size=8,hjust=.5,vjust=.5,face="plain"),
+        axis.text.y = element_text(colour="grey20",size=8,hjust=1,vjust=0,face="plain"),  
+        axis.title.x = element_text(colour="grey20",size=18,angle=0,hjust=.5,vjust=0,face="plain"),
+        axis.title.y = element_text(colour="grey20",size=16,angle=90,hjust=.5,vjust=.5,face="plain"),
+        plot.title = element_text(vjust=2, size = 24,face="bold"),
+        plot.subtitle = element_text(vjust=2, size = 16),
+        plot.caption = element_text(vjust=2, size = 16),
+        legend.position = "bottom",
+        panel.border = element_rect(colour = "white"),
+        strip.text = element_text(size = 18, hjust = 0.05, vjust = -0.5),
+        strip.background = element_rect(colour = "white", fill = "white"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()) +
+  scale_y_continuous(labels=percent) +
+  scale_fill_manual(
+    values = brand_tvs_colors) +
+  labs(title = tt5, subtitle = stt5, caption = cptn,
+       x = "", y = "") +
+  labs(title = tt3, subtitle = stt3, caption = "",
+       x = "", y = ""), tooltip = c("marca", "text")) %>% 
+  config(displayModeBar = FALSE)
+
+
+
+```
+
+
+
+
+### Falabella
+
+
+Como mencionamos anteriormente, Falabella ha incrementado su oferta de TVs este año. Y vemos, en este gráfico, que lo ha hecho, principalmente, en los rangos _S/ 1,500 a S/ 2,500_ y _S/ 500 a S/ 1,500_.
+
+Estas nuevas marcas son: Recco, Prima, Philips, Imaco, Continental y AOC. Y lo han hecho en detrimento de la oferta de TVs de la marca Samsung en estos rangos.
+
+También vemos que ahora Falabella tiene oferta de TVs en el rango de menos de S/ 500, con las marcas AOC y Daewoo.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+### Falabella
+
+### Falabella
+
+
+
+tvs_falabella_tvs_por_rangos <- tvs_falabella  %>%
+  group_by(periodo, rangos, marca) %>%
+  summarise(cantidad.marca = length(marca)) %>% 
+  #mutate(porcentaje = paste0(round(cantidad.marca/sum(cantidad.marca)*100,2),'%'))
+  mutate(porcentaje_tvs = round(cantidad.marca/sum(cantidad.marca),4))
+
+
+
+
+
+tvs_falabella_tvs_por_rangos$periodo <- factor(tvs_falabella_tvs_por_rangos$periodo, levels = c(2016,2017, 2019),
+                                              ordered = T)
+
+
+
+tvs_falabella_tvs_por_rangos$rangos <- factor(tvs_falabella_tvs_por_rangos$rangos, levels = c("< S/ 500",
+                                                          "S/ 500 - S/ 1,500",
+                                                          "S/ 1,500 - S/ 2,500",
+                                                          "S/ 2,500 - S/ 3,500",
+                                                          "S/ 3,500 - S/ 4,500",
+                                                          "> S/ 4,500"),
+                                            ordered = T)
+
+
+
+##tt5 <- "Sagafalabella \n % marcas de tvs por rangos de precios"
+
+tt5 <- ""
+stt5 <- "\n"
+
+
+ggplotly(ggplot(tvs_falabella_tvs_por_rangos, aes(x=rangos, y= porcentaje_tvs ,fill=marca, text = percent(porcentaje_tvs))) + 
+  geom_bar(stat = "identity", width = .7) +
+  facet_grid(~ periodo) +
+  coord_flip() +  
+  theme_bw() +
+  theme(axis.text.x = element_text(colour="grey20",size=8,hjust=.5,vjust=.5,face="plain"),
+        axis.text.y = element_text(colour="grey20",size=8,hjust=1,vjust=0,face="plain"),  
+        axis.title.x = element_text(colour="grey20",size=18,angle=0,hjust=.5,vjust=0,face="plain"),
+        axis.title.y = element_text(colour="grey20",size=16,angle=90,hjust=.5,vjust=.5,face="plain"),
+        plot.title = element_text(vjust=2, size = 24,face="bold"),
+        plot.subtitle = element_text(vjust=2, size = 16),
+        plot.caption = element_text(vjust=2, size = 16),
+        legend.position = "bottom",
+        panel.border = element_rect(colour = "white"),
+        strip.text = element_text(size = 18, hjust = 0.05, vjust = -0.5),
+        strip.background = element_rect(colour = "white", fill = "white"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()) +
+  scale_y_continuous(labels=percent) +
+  scale_fill_manual(
+    values = brand_tvs_colors) +
+  labs(title = tt5, subtitle = stt5, caption = cptn,
+       x = "", y = "") +
+  labs(title = tt3, subtitle = stt3, caption = "",
+       x = "", y = ""), tooltip = c("marca", "text")) %>% 
+  config(displayModeBar = FALSE)
+
+
+
+
+
+```
+
+
+### Linio 
+
+Este año, Linio redujo la cantidad de TVs que oferta. Y, como vemos en este gráfico, la varidad de marcas en los diferentes rangos de precios también ha disminuido. Esto es más notorio en el rango de S/ 500 a S/ 1,500, donde ahora solo encontramos 6 marcas; cuando antes habían tvs de hasta 10 marcas distintas.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+
+
+tvs_linio_tvs_por_rangos <- tvs_linio  %>%
+  group_by(periodo, rangos, marca) %>%
+  summarise(cantidad.marca = length(marca)) %>% 
+  #mutate(porcentaje = paste0(round(cantidad.marca/sum(cantidad.marca)*100,2),'%'))
+  mutate(porcentaje_tvs = round(cantidad.marca/sum(cantidad.marca),4))
+
+
+
+
+
+
+
+
+tvs_linio_tvs_por_rangos$periodo <- factor(tvs_linio_tvs_por_rangos$periodo, levels = c(2016,2017, 2019),
+                                          ordered = T)
+
+
+
+
+tvs_linio_tvs_por_rangos$rangos <- factor(tvs_linio_tvs_por_rangos$rangos, levels = c("< S/ 500",
+                                                          "S/ 500 - S/ 1,500",
+                                                          "S/ 1,500 - S/ 2,500",
+                                                          "S/ 2,500 - S/ 3,500",
+                                                          "S/ 3,500 - S/ 4,500",
+                                                          "> S/ 4,500"),
+                                        ordered = T)
+
+
+
+
+#tt5 <- "Linio \n % marcas de tvs por rangos de precios"
+tt5 <- ""
+
+stt5 <- "\n"
+
+
+ggplotly(ggplot(tvs_linio_tvs_por_rangos, aes(x=rangos, y= porcentaje_tvs ,fill=marca, text = percent(porcentaje_tvs))) + 
+  geom_bar(stat = "identity", width = .7) +
+  facet_grid(~ periodo) +
+  coord_flip() +  
+  theme_bw() +
+  theme(axis.text.x = element_text(colour="grey20",size=8,hjust=.5,vjust=.5,face="plain"),
+        axis.text.y = element_text(colour="grey20",size=8,hjust=1,vjust=0,face="plain"),  
+        axis.title.x = element_text(colour="grey20",size=18,angle=0,hjust=.5,vjust=0,face="plain"),
+        axis.title.y = element_text(colour="grey20",size=16,angle=90,hjust=.5,vjust=.5,face="plain"),
+        plot.title = element_text(vjust=2, size = 24,face="bold"),
+        plot.subtitle = element_text(vjust=2, size = 16),
+        plot.caption = element_text(vjust=2, size = 16),
+        legend.position = "bottom",
+        panel.border = element_rect(colour = "white"),
+        strip.text = element_text(size = 18, hjust = 0.05, vjust = -0.5),
+        strip.background = element_rect(colour = "white", fill = "white"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()) +
+  scale_y_continuous(labels=percent) +
+  scale_fill_manual(
+    values = brand_tvs_colors) +
+  labs(title = tt5, subtitle = stt5, caption = cptn,
+       x = "", y = "") +
+  labs(title = tt3, subtitle = stt3, caption = "",
+       x = "", y = ""), tooltip = c("marca", "text")) %>% 
+  config(displayModeBar = FALSE)
+
+```
+
+</br>
+</br>
+
+
+## Precio actual por marca de TV
+
+
+### Ripley: distribución de precios por marca
+
+</br>
+</br>
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+
+tvs_ripley$periodo <- factor(tvs_ripley$periodo, levels = c(2016,2017,2019),
+                             ordered = T)
+
+
+
+### Ripley: distribuci?n de los precios de TVs por marca
+
+
+precio_actual_ripley <- plot_ly(tvs_ripley, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors) %>%
+   layout(boxmode = "group") %>% 
+  layout(title = "Ripley - Precios de TVs por marca") %>% 
+  add_boxplot() %>%
+  layout(yaxis = list( tickprefix = 'S/', tickformat = ',.2f' )) %>% 
+  config(displayModeBar = FALSE) 
+
+precio_actual_ripley
+
+
+
+```
+
+
+</br>
+</br>
+
+### Falabella: distribución de precios por marca
+
+</br>
+</br>
+
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+tvs_falabella$periodo <- factor(tvs_falabella$periodo, levels = c(2016,2017,2019),
+                            ordered = T)
+
+
+
+### Falabella: distribuci?n de los precios de TVs por marca
+
+
+precio_actual_falabella <- plot_ly(tvs_falabella, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors) %>%
+  layout(boxmode = "group") %>% 
+  layout(title = "Falabella - Precios de TVs por marca") %>% 
+  add_boxplot() %>%
+  layout(yaxis = list( tickprefix = 'S/', tickformat = ',.2f' )) %>% 
+  config(displayModeBar = FALSE)  
+
+precio_actual_falabella
+
+
+```
+
+
+</br>
+</br>
+
+
+
+### Linio: distribución de precios por marca (parte 1 y 2)
+
+</br>
+</br>
+</br>
+</br>
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+tvs_linio$periodo <- factor(tvs_linio$periodo, levels = c(2016,2017,2019),
+                            ordered = T)
+
+
+
+
+tvs_linio_parte1$periodo <- factor(tvs_linio_parte1$periodo, levels = c(2016,2017,2019),
+                                   ordered = T)
+
+
+
+tvs_linio_parte2$periodo <- factor(tvs_linio_parte2$periodo, levels = c(2016,2017,2019),
+                                   ordered = T)
+
+
+
+
+
+precio_actual_linio_parte1 <- plot_ly(tvs_linio_parte1, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors) %>%
+  layout(boxmode = "group",
+         title = "Linio - Precios de TVs (Parte 1) ") %>% 
+ add_boxplot() %>%
+  layout(yaxis = list( tickprefix = 'S/', tickformat = ',.2f' )) %>% 
+  config(displayModeBar = FALSE) 
+
+precio_actual_linio_parte1
+
+```
+
+</br>
+</br>
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+precio_actual_linio_parte2 <- plot_ly(tvs_linio_parte2, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors) %>%
+  layout(boxmode = "group",
+         title = "Linio - Precios de TVs (Parte 2)") %>% 
+  add_boxplot() %>%
+  layout(yaxis = list( tickprefix = 'S/', tickformat = ',.2f' )) %>% 
+  config(displayModeBar = FALSE) 
+
+
+precio_actual_linio_parte2
+
+
+
+
+```
+
+</br>
+</br>
+</br>
+</br>
+
+# Conclusiones:
+
+
+Este año me llama mucho la nueva estrategia adopatada por Falabella. Años atrás limitaban la cantidad de TVs ofertados. Sin embargo, este año es todo lo contrario; mientras otros ecommerce optaron por disminuir su oferta, Falabella la incrementó. 
+
+Parece que Falabella estuviese optando por la estrategia que tenía Linio años atrás, de mostrar una gran variedad de opciones a sus clientes (quizá debido a la adquisición que hizo el Grupo Falabella de Linio). Sin embargo, desde este humilde blog, creemos que a veces es mejor limitar las opciones a los clientes para facilitarles la decisión de compra.
+
+Mención aparte merece la forma en que Falabella muestra sus productos, mostrando datos importantes para el cliente. Algo que no hacen otros Ecommerce.
+
+Agradezco sus comentarios y sugerencias,
+
+Omar G.
