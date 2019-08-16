@@ -1,7 +1,13 @@
 ---
-title: "Compartivo TVs al 2019"
+title: "Compartivo TVs - 2019"
 author: "Omar Gonzáles Díaz"
 date: '2019-08-15'
+categories:
+- webscrapping
+description: comprativo de tvs
+slug: comparativo-tvs-2019
+tags:
+- webscrapping
 banner: img/banners/tvs.jpg
 output: html_document
 ---

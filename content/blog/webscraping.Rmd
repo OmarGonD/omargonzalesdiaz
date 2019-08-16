@@ -10,7 +10,6 @@ slug: webscrapping-sencillo
 tags:
 - webscrapping
 banner: img/banners/webscrapping-beautifulsoup.png
-
 ---
 
 ```{r setup, include=FALSE}
