@@ -9,11 +9,8 @@ slug: comparativo-tvs2019
 tags:
 - webscrapping
 banner: img/banners/tvs.jpg
-output: 
-  html_document: 
-    df_print: default
-    keep_md: yes
-    theme: cosmo
+output: html_document
+  
 ---
   
   
