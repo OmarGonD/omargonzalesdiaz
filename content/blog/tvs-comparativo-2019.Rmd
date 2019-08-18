@@ -11,9 +11,9 @@ tags:
 banner: img/banners/tvs.jpg
 output: 
   html_document: 
-    df_print: tibble
-    self_contained: no
-    smart: no
+    df_print: default
+    keep_md: yes
+    theme: cosmo
 ---
   
   
