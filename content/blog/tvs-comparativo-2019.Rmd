@@ -31,11 +31,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 El 2017 se hizo pública nuestra primera investigación sobre la oferta de TVs en línea por parte de los principales protagonistas de aquel entonces: Falabella, Ripley y Linio. La cuál tuvo gran acogida por parte de nuestros lectores, con recomendaciones y fue compartida por muchos en sus redes. ¡Gracias!
 
-Este año decidimos actualizar esta investigación e incluir a otros E-commerce que han ingresado con ofertas de Tvs interesantes: La Curacao (del Grupo Efe), Tottus y Wong.
+Este año decidimos actualizar esta investigación e incluir a otros E-commerce que han ingresado con ofertas de Tvs interesantes: La Curacao (del Grupo Efe), Tottus y Wong. Para este 2019, contamos con la data de los 6 principales ecommerce del Perú.
 
-Si bien el análisis comparativo de año a año que mostramos en esta ocasión se enfocará principalmente en los 3 E-Commerce que trabajamos años atrás; se consideró necesario mostrar a grandes rasgos la situación de los 5 principales ofertantes de TVs online. Lo que nos servirá como base para que en próximos años este análisis se haga sobre el total de los E-Commerce vigentes en nuestro país.
+El análisis comparativo de año a año que mostramos en esta ocasión se enfocará principalmente en los 3 E-Commerce que trabajamos años atrás; se consideró necesario mostrar a grandes rasgos la situación de los 6 principales ofertantes de TVs online. Lo que nos servirá como base para que en próximos años este análisis se haga sobre el total de los E-Commerce vigentes en nuestro país.
 
-Finalmente, indicar que esta es una investigación descriptiva. Lo que queremos es mostrar los datos que encontramos e inferir algunos comentarios que se pueden observar. No es el objetivo de esta entrada analizar a profundidad el por qué de cada una de las estrategias de marketing de cada empresa; por el contrario, mencionaremos algunos datos resaltantes que se observan en los 3 ecommerce más importantes del país: Linio, Ripley y Falabella.
+Finalmente, indicar que esta es una investigación descriptiva. Lo que queremos es mostrar los datos que encontramos e inferir algunos comentarios que se pueden observar. No es el objetivo de esta entrada analizar a profundidad el por qué de cada una de las estrategias de marketing de cada empresa; por el contrario, mencionaremos algunos datos resaltantes que se encontramos.
 
 Para este análisis se utilizó el lenguaje de programación R en la extracción de datos de cada uno de los ecommerce. El código completo lo encontrarán al final, en caso quisieran reproducir los resultados mostrados en este post.
 
@@ -50,7 +50,9 @@ __Nota:__ No pudimos actualizar los scripts con la data del 2018, por lo que no 
 </br>
 
 
-Para obtener los datos ingresamos a las sección de televisores de los 3 ecommerce estudiados.
+Para obtener los datos ingresamos a las sección de televisores de los ecommerce estudiados.
+
+Pueden descargar la data de este enlace: [Datos de los principales Ecommerce peruanos](https://www.dropbox.com/s/ocfxqhe3vkyzhop/tvs-2019.csv?raw=1)
 
 Toda página web tiene una estructura HTML que debe respetar y con la cuál debe ser consistente. Aprovechando estas 2 características es que podemos programar scripts que, en base a la estructura de cada Ecommerce, recoja los siguientes datos de cada uno de los televisores publicitados: 
 
@@ -60,8 +62,6 @@ Para este proposito se utilizó el paquete [RSelenium](https://cran.r-project.or
 
 
 __Imporante:__ Al trabajar los datos se tuvieron que eliminar productos que aparecen en la sección televisores de algunos ecommerce, pero que realmente no lo son (Por ejemplo: racks de TVs, Controles remotos, cables, etc.).
-
-También notamos que apartir del 16/08 Falabella removió los TVs de mayor precio, y ahora solo encontramos que el televisor más costoso está a S/5,999. Cuando hace unos días el precio mayor era de S/ 29,999. Esperaremos unos días para actualizar la información mostrada, a fin de evitar nuevos cambios que alteren los resultados.
 
 
 </br>
@@ -124,9 +124,9 @@ ecommerce_colors <- c("linio" = "#ff5500","ripley" = "#802D69","falabella" = "#a
 
 </br>
 
-El 2019, Falabella es el único ecommerce que incrementó la cantidad de televisores ofertados. Esta tienda online ofrece 148 televisores, un incremento del %174 respecto al 2017 (solo contaban con 54 tvs).
+El 2019, Falabella es el único ecommerce que incrementó la cantidad de televisores ofertados. Esta tienda online ofrece 115 televisores, un incremento del +112.96% respecto al 2017 (solo contaban con 54 tvs).
 
-Por otro lado, Ripley y Linio disminuyeron su oferta de TVs. Ripley ahora solo ofrece 65 tvs (-41.44% respecto al 2017), mientras que Linio ofrece 181 televisores (-57.21%).
+Por otro lado, Ripley y Linio disminuyeron su oferta de TVs. Ripley ahora solo ofrece 65 tvs (-41.44% respecto al 2017), mientras que Linio ofrece 181 televisores (-57.68%).
 
 Hace un par de años, Barbara E. Kahn, Profesora de Marketing en la Wharton School de la Universidad de Pennsylvania, y Claudia Townsend, profesora de Marketing en la Universidad de Miami, publicaron [The ‘Visual Preference Heuristic’: The Influence of Visual versus Verbal Depiction on Assortment Processing, Perceived Variety, and Choice Overload](http://www.jcr-admin.org/files/pressPDFs/101613155527_Townsend_Article.pdf). En este artículo analizan el comporamiento de los consumidores al tomar decisiones en el momento de compra. 
 
@@ -144,7 +144,7 @@ Y quisiera resaltar la segunda conclusión:
 </br>
 </br>
 
-## Cantidad de TVs ofertados por los 5 principales E-Commerce
+## Cantidad de TVs ofertados por los principales E-Commerce de Perú
 
 </br>
 </br>
@@ -265,6 +265,8 @@ ggplotly(tvs_todas, tooltip=c("cantidad"), width = 920, height = 600)  %>%
 </br>
 
 ## Cantidad de TVs histórico (2016, 2017 y 2019)
+
+### Para los gráficos comparativos, solo utilizaremos la data de Ripley, Falabella y Linio, esto debido a que solo contamos con data histórica de estos 3 Ecommerce.
 
 </br>
 </br>
