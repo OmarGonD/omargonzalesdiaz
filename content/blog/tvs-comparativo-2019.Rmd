@@ -1,10 +1,10 @@
 ---
-title: "Compartivo TVs - 2019"
+title: "Comparativo TVs de Ecommerce peruanos - 2019"
 author: "Omar Gonzáles Díaz"
 date: "2019-08-15"
 categories:
 - ecommerce
-description: comprativo de tvs
+description: comparativo de tvs
 slug: comparativo-tvs2019
 tags:
 - webscrapping
