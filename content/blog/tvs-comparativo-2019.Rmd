@@ -10,7 +10,6 @@ tags:
 - webscrapping
 banner: img/banners/tvs.jpg
 output: html_document
-  
 ---
   
   
