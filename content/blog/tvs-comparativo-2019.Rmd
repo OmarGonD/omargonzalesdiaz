@@ -9,7 +9,11 @@ slug: comparativo-tvs2019
 tags:
 - webscrapping
 banner: img/banners/tvs.jpg
-output: html_document
+output: 
+  html_document: 
+    df_print: tibble
+    self_contained: no
+    smart: no
 ---
   
   
@@ -81,7 +85,7 @@ library(repmis)
 library(knitr)
 library(formattable)
 library(scales)
-
+library(forcats)
 
 
 
@@ -227,7 +231,7 @@ cptn <- "\nogonzales.com | Data Analyst"
 
 
 
-tvs_todas <- ggplot(tvs_todas_cantidad, aes(x=ecommerce, y= cantidad, fill = ecommerce)) + 
+tvs_todas <- ggplot(tvs_todas_cantidad, aes(x=fct_reorder(ecommerce, cantidad, .desc = TRUE), y= cantidad, fill = ecommerce)) + 
   geom_bar(stat = "identity", width = .7) +
   facet_wrap(~ periodo, ncol = 3, nrow = 1) +
   theme_bw() +
@@ -271,7 +275,7 @@ ggplotly(tvs_todas, tooltip=c("cantidad"), width = 920, height = 600)  %>%
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, results='hold', plotly=TRUE, fig.align = 'center', fig.width=10}
 
-cantidad_tvs <- ggplot(tvs_cantidad, aes(x=ecommerce, y= cantidad, fill = ecommerce)) + 
+cantidad_tvs <- ggplot(tvs_cantidad, aes(x=fct_reorder(ecommerce, cantidad, .desc = TRUE), y= cantidad, fill = ecommerce)) + 
   geom_bar(stat = "identity", width = .7) +
   facet_wrap(~ periodo, ncol = 3, nrow = 1) +
   theme_bw() +
@@ -400,7 +404,7 @@ pulgadas_precio <- ggplot(tv_pulgadas_vs_pulgadas, aes(x = pulgadas, y = precio_
        x = "pulgadas \n", y = "Precio en S/.")
 
 
-ggplotly(pulgadas_precio, tooltip=c("marca", "pulgadas", "text"))  %>% 
+ggplotly(pulgadas_precio, tooltip=c("marca", "pulgadas", "text"),  width = 920, height = 600)  %>% 
   config(displayModeBar = FALSE)
 
 
@@ -507,7 +511,7 @@ tvs_por_rangos_de_precio <- ggplotly(ggplot(tvs_rangos, aes(x = rangos, y = cant
                                      ylim(0, 300) +
                                       labs(title = tt2, subtitle = stt2, caption = cptn,
                                            x = "", y = ""),
-                                    tooltip=c("cantidad", "ecommerce"))
+                                    tooltip=c("cantidad", "ecommerce"),  width = 920, height = 600)
 
 
 
@@ -573,7 +577,7 @@ tvs_cantidad$ecommerce <- factor(tvs_cantidad$ecommerce, levels = c("linio",
 
 
 p <- plot_ly(tvs_precios, x = ~periodo, y = ~precio_actual, color = ~ecommerce, 
-        colors = ecommerce_colors) %>%
+        colors = ecommerce_colors,  width = 920, height = 600) %>%
   add_boxplot() %>%
   layout(boxmode = "group",
          title = "Distribución de precios por Ecommerce",
@@ -722,7 +726,7 @@ ggplotly(ggplot(tvs_ripley_tvs_por_rangos, aes(x=rangos, y= porcentaje_tvs ,fill
   labs(title = tt5, subtitle = stt5, caption = cptn,
        x = "", y = "") +
   labs(title = tt3, subtitle = stt3, caption = "",
-       x = "", y = ""), tooltip = c("marca", "text")) %>% 
+       x = "", y = ""), tooltip = c("marca", "text"),  width = 920, height = 600) %>% 
   config(displayModeBar = FALSE)
 
 
@@ -806,7 +810,7 @@ ggplotly(ggplot(tvs_falabella_tvs_por_rangos, aes(x=rangos, y= porcentaje_tvs ,f
   labs(title = tt5, subtitle = stt5, caption = cptn,
        x = "", y = "") +
   labs(title = tt3, subtitle = stt3, caption = "",
-       x = "", y = ""), tooltip = c("marca", "text")) %>% 
+       x = "", y = ""), tooltip = c("marca", "text"),  width = 920, height = 600) %>% 
   config(displayModeBar = FALSE)
 
 
@@ -886,7 +890,7 @@ ggplotly(ggplot(tvs_linio_tvs_por_rangos, aes(x=rangos, y= porcentaje_tvs ,fill=
   labs(title = tt5, subtitle = stt5, caption = cptn,
        x = "", y = "") +
   labs(title = tt3, subtitle = stt3, caption = "",
-       x = "", y = ""), tooltip = c("marca", "text")) %>% 
+       x = "", y = ""), tooltip = c("marca", "text"),  width = 920, height = 600) %>% 
   config(displayModeBar = FALSE)
 
 ```
@@ -920,7 +924,7 @@ precio_actual_ripley <- plot_ly(tvs_ripley, x = ~periodo, y = ~precio_actual, co
    layout(boxmode = "group") %>% 
   layout(title = "Ripley - Precios de TVs por marca") %>% 
   add_boxplot() %>%
-  layout(yaxis = list( tickprefix = 'S/', tickformat = ',.2f' )) %>% 
+  layout(yaxis = list( tickprefix = 'S/', tickformat = ',.2f' ),  width = 920, height = 600) %>% 
   config(displayModeBar = FALSE) 
 
 precio_actual_ripley
@@ -951,7 +955,7 @@ tvs_falabella$periodo <- factor(tvs_falabella$periodo, levels = c(2016,2017,2019
 ### Falabella: distribuci?n de los precios de TVs por marca
 
 
-precio_actual_falabella <- plot_ly(tvs_falabella, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors) %>%
+precio_actual_falabella <- plot_ly(tvs_falabella, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors,  width = 920, height = 600) %>%
   layout(boxmode = "group") %>% 
   layout(title = "Falabella - Precios de TVs por marca") %>% 
   add_boxplot() %>%
@@ -997,7 +1001,7 @@ tvs_linio_parte2$periodo <- factor(tvs_linio_parte2$periodo, levels = c(2016,201
 
 
 
-precio_actual_linio_parte1 <- plot_ly(tvs_linio_parte1, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors) %>%
+precio_actual_linio_parte1 <- plot_ly(tvs_linio_parte1, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors,  width = 920, height = 600) %>%
   layout(boxmode = "group",
          title = "Linio - Precios de TVs (Parte 1) ") %>% 
  add_boxplot() %>%
@@ -1013,7 +1017,7 @@ precio_actual_linio_parte1
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-precio_actual_linio_parte2 <- plot_ly(tvs_linio_parte2, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors) %>%
+precio_actual_linio_parte2 <- plot_ly(tvs_linio_parte2, x = ~periodo, y = ~precio_actual, color = ~marca, type = "box", colors = brand_tvs_colors,  width = 920, height = 600) %>%
   layout(boxmode = "group",
          title = "Linio - Precios de TVs (Parte 2)") %>% 
   add_boxplot() %>%
@@ -1045,3 +1049,6 @@ Mención aparte merece la forma en que Falabella muestra sus productos, mostrand
 Agradezco sus comentarios y sugerencias,
 
 Omar G.
+
+</br>
+</br>
