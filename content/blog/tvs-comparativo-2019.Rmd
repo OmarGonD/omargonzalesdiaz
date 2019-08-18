@@ -35,7 +35,7 @@ Este año decidimos actualizar esta investigación e incluir a otros E-commerce 
 
 El análisis comparativo de año a año que mostramos en esta ocasión se enfocará principalmente en los 3 E-Commerce que trabajamos años atrás; se consideró necesario mostrar a grandes rasgos la situación de los 6 principales ofertantes de TVs online. Lo que nos servirá como base para que en próximos años este análisis se haga sobre el total de los E-Commerce vigentes en nuestro país.
 
-Finalmente, indicar que esta es una investigación descriptiva. Lo que queremos es mostrar los datos que encontramos e inferir algunos comentarios que se pueden observar. No es el objetivo de esta entrada analizar a profundidad el por qué de cada una de las estrategias de marketing de cada empresa; por el contrario, mencionaremos algunos datos resaltantes que se encontramos.
+Finalmente, indicar que esta es una investigación descriptiva. Lo que queremos es mostrar los datos que encontramos e inferir algunos comentarios que se pueden observar. No es el objetivo de esta entrada analizar a profundidad el por qué de cada una de las estrategias de marketing de cada empresa; por el contrario, mencionaremos algunos datos resaltantes que encontramos.
 
 Para este análisis se utilizó el lenguaje de programación R en la extracción de datos de cada uno de los ecommerce. El código completo lo encontrarán al final, en caso quisieran reproducir los resultados mostrados en este post.
 
