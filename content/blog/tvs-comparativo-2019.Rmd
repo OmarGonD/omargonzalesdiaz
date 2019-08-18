@@ -29,15 +29,13 @@ knitr::opts_chunk$set(echo = TRUE)
 </br>
 
 
-El 2017 se hizo pública nuestra primera investigación sobre la oferta de TVs en línea por parte de los principales protagonistas de aquel entonces: Falabella, Ripley y Linio. La cuál tuvo gran acogida por parte de nuestros lectores, con recomendaciones y fue compartida por muchos en sus redes. ¡Gracias!
+El 2017 se hizo pública nuestra primera investigación sobre la oferta de TVs en línea por parte de los principales protagonistas de aquel entonces: Falabella, Ripley y Linio. La cuál tuvo gran acogida por parte de nuestros lectores, con recomendaciones; y que fue compartida por muchos en sus redes. ¡Gracias!
 
-Este año decidimos actualizar esta investigación e incluir a otros E-commerce que han ingresado con ofertas de Tvs interesantes: La Curacao (del Grupo Efe), Tottus y Wong. Para este 2019, contamos con la data de los 6 principales ecommerce del Perú.
+Este año decidimos actualizar esta investigación e incluir a otros E-commerce que han ingresado con ofertas de TVs interesantes: La Curacao (del Grupo Efe), Tottus y Wong. Ya para este 2019, contamos con la data de los 6 principales ecommerce del Perú.
 
-El análisis comparativo de año a año que mostramos en esta ocasión se enfocará principalmente en los 3 E-Commerce que trabajamos años atrás; se consideró necesario mostrar a grandes rasgos la situación de los 6 principales ofertantes de TVs online. Lo que nos servirá como base para que en próximos años este análisis se haga sobre el total de los E-Commerce vigentes en nuestro país.
+Si bien tenemos data de los 6 principales Ecommerce, el análisis comparativo de año a año que mostramos, en esta ocasión, nos enfocaremos principalmente en los 3 E-Commerce que ya trabajamos años atrás (Falabella, Ripley y Linio). Sin embargo, también se consideró necesario mostrar a grandes rasgos la situación de los 6 principales ofertantes de TVs online. No profundizaremos mucho en el total de los ecommerce, solo haremos el análisis histórico de los 3 ecommerce de los cuáles tenemos data de años atrás.
 
-Finalmente, indicar que esta es una investigación descriptiva. Lo que queremos es mostrar los datos que encontramos e inferir algunos comentarios que se pueden observar. No es el objetivo de esta entrada analizar a profundidad el por qué de cada una de las estrategias de marketing de cada empresa; por el contrario, mencionaremos algunos datos resaltantes que encontramos.
-
-Para este análisis se utilizó el lenguaje de programación R en la extracción de datos de cada uno de los ecommerce. El código completo lo encontrarán al final, en caso quisieran reproducir los resultados mostrados en este post.
+Finalmente, indicar que esta es una investigación descriptiva. Lo que queremos es mostrar los datos que encontramos e inferir algunos comentarios de lo que se puede observar. No es el objetivo de esta entrada analizar a profundidad el por qué de cada una de las estrategias de marketing de cada empresa; por el contrario, mencionaremos algunos datos resaltantes que encontramos.
 
 __Nota:__ No pudimos actualizar los scripts con la data del 2018, por lo que no se muestran datos de ese año. Ya hemos encontrado la forma para que esto no se repita a futuro y podemos tener un análisis continuo en próximas oportunidades.
 
