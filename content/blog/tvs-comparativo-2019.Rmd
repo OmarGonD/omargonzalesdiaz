@@ -1,5 +1,5 @@
 ---
-title: "Comparativo TVs de Ecommerce peruanos - 2019"
+title: "Comparativo TVs - Ecommerce peruanos 2019"
 author: "Omar Gonzáles Díaz"
 date: "2019-08-15"
 categories:
